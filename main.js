@@ -1,1698 +1,1246 @@
-// ============================================
-// Modern Solar Energy Website - Main JavaScript
-// ============================================
+// Mobile nav toggle
+const toggle = document.querySelector('.nav__toggle');
+const links = document.querySelector('[data-nav-links]');
 
-class SolarEnergyWebsite {
-    constructor() {
-        this.init();
-    }
+if (toggle && links) {
+  toggle.addEventListener('click', () => {
+    const open = links.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
 
-    // Initialize all functionality
-    init() {
-        this.setupMobileMenu();
-        this.setupDropdowns();
-        this.setupModals();
-        this.setupFloatingActions();
-        this.initCountingAnimation();
-        this.setupScrollAnimations();
-        this.setupFormValidation();
-        this.setupClientsSlider();
-        this.setupBackToTop();
-        this.setupHeroAnimation();
-    }
-
-    // Mobile Menu Toggle
-    setupMobileMenu() {
-        const toggle = document.querySelector('.mobile-menu-toggle');
-        const menu = document.querySelector('.nav-menu-wrapper');
-        const nav = document.querySelector('.nav-container');
-
-        if (!toggle || !menu) return;
-
-        toggle.addEventListener('click', () => {
-            toggle.classList.toggle('active');
-            menu.classList.toggle('active');
-            nav.classList.toggle('menu-open');
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.nav-content')) {
-                toggle.classList.remove('active');
-                menu.classList.remove('active');
-                nav.classList.remove('menu-open');
-            }
-        });
-
-        // Close menu on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                toggle.classList.remove('active');
-                menu.classList.remove('active');
-                nav.classList.remove('menu-open');
-            }
-        });
-    }
-
-    // Dropdown functionality
-    setupDropdowns() {
-        const dropdowns = document.querySelectorAll('.nav-dropdown');
-
-        dropdowns.forEach(dropdown => {
-            const toggle = dropdown.querySelector('.nav-link');
-
-            toggle?.addEventListener('click', (e) => {
-                if (window.innerWidth > 768) return;
-                
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Close other dropdowns
-                dropdowns.forEach(other => {
-                    if (other !== dropdown) {
-                        other.classList.remove('active');
-                    }
-                });
-                
-                // Toggle current dropdown
-                dropdown.classList.toggle('active');
-            });
-        });
-
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', () => {
-            dropdowns.forEach(dropdown => {
-                dropdown.classList.remove('active');
-            });
-        });
-    }
-
-    // Modal functionality
-    setupModals() {
-        const modal = document.getElementById('consultationModal');
-        const trigger = document.querySelector('.consultation-trigger');
-        const closeBtn = document.querySelector('.modal-close');
-        const floatContact = document.querySelector('.float-button.contact');
-
-        if (!modal) return;
-
-        // Open modal
-        const openModal = () => {
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-            
-            // Animate in
-            setTimeout(() => {
-                modal.style.opacity = '1';
-                modal.querySelector('.modal-content').style.transform = 'translateY(0)';
-            }, 10);
-        };
-
-        // Close modal
-        const closeModal = () => {
-            modal.style.opacity = '0';
-            modal.querySelector('.modal-content').style.transform = 'translateY(-30px)';
-            
-            setTimeout(() => {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }, 300);
-        };
-
-        // Event listeners
-        trigger?.addEventListener('click', openModal);
-        floatContact?.addEventListener('click', openModal);
-        closeBtn?.addEventListener('click', closeModal);
-
-        // Close when clicking outside modal
-        modal?.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-
-        // Close on escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.style.display === 'flex') {
-                closeModal();
-            }
-        });
-    }
-
-    // Floating actions
-    setupFloatingActions() {
-        const topBtn = document.querySelector('.float-button.top');
-        const contactBtn = document.querySelector('.float-button.contact');
-        
-        // Contact button shows contact info
-        contactBtn?.addEventListener('click', () => {
-            const contactInfo = document.createElement('div');
-            contactInfo.className = 'contact-tooltip';
-            contactInfo.innerHTML = `
-                <div class="tooltip-content">
-                    <p>📞 +2349050307173</p>
-                    <p>📧 hello@mosolarenergy.com</p>
-                    <p>📍 Abuja, Nigeria</p>
-                </div>
-            `;
-            
-            contactInfo.style.position = 'absolute';
-            contactInfo.style.bottom = '70px';
-            contactInfo.style.right = '0';
-            contactInfo.style.background = 'white';
-            contactInfo.style.padding = '1rem';
-            contactInfo.style.borderRadius = '12px';
-            contactInfo.style.boxShadow = '0 10px 40px rgba(0,0,0,0.1)';
-            contactInfo.style.zIndex = '1000';
-            contactInfo.style.minWidth = '200px';
-            
-            contactBtn.appendChild(contactInfo);
-            
-            // Remove tooltip after 5 seconds
-            setTimeout(() => {
-                if (contactInfo.parentNode) {
-                    contactInfo.remove();
-                }
-            }, 5000);
-        });
-    }
-
-    // Back to top functionality
-    setupBackToTop() {
-        const topBtn = document.querySelector('.float-button.top');
-        
-        if (!topBtn) return;
-        
-        topBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                topBtn.classList.add('visible');
-            } else {
-                topBtn.classList.remove('visible');
-            }
-        });
-    }
-
-    // Counting animation for statistics
-    initCountingAnimation() {
-        const statCards = document.querySelectorAll('.stat-card');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const card = entry.target;
-                    const numberElement = card.querySelector('.stat-number');
-                    const progressBar = card.querySelector('.progress-bar');
-                    
-                    if (!numberElement || numberElement.dataset.animated) return;
-                    
-                    numberElement.dataset.animated = 'true';
-                    this.animateCounter(numberElement, progressBar);
-                    
-                    observer.unobserve(card);
-                }
-            });
-        }, {
-            threshold: 0.5,
-            rootMargin: '0px 0px -100px 0px'
-        });
-
-        statCards.forEach(card => observer.observe(card));
-    }
-
-    // Animate counter with progress bar
-    animateCounter(element, progressBar) {
-        const target = parseFloat(element.dataset.target);
-        const suffix = element.dataset.suffix || '';
-        const startValue = parseFloat(element.textContent.replace(/[^\d.-]/g, '')) || 0;
-        const isKValue = element.textContent.includes('k');
-        const duration = 2000;
-        const startTime = performance.now();
-
-        const animate = (currentTime) => {
-            const elapsedTime = currentTime - startTime;
-            const progress = Math.min(elapsedTime / duration, 1);
-            
-            // Easing function
-            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-            
-            let currentValue = startValue + (target - startValue) * easeOutQuart;
-            
-            if (isKValue) {
-                element.textContent = (currentValue / 1000).toFixed(1) + suffix;
-            } else {
-                element.textContent = currentValue.toFixed(1) + suffix;
-            }
-            
-            // Update progress bar
-            if (progressBar) {
-                progressBar.style.width = `${progress * 100}%`;
-            }
-
-            if (progress < 1) {
-                requestAnimationFrame(animate);
-            }
-        };
-
-        requestAnimationFrame(animate);
-    }
-
-    // Clients slider animation
-    setupClientsSlider() {
-        const logos = document.querySelector('.client-logos');
-        if (!logos) return;
-
-        // Duplicate logos for seamless scrolling
-        const logosHTML = logos.innerHTML;
-        logos.innerHTML = logosHTML + logosHTML;
-    }
-
-    // Scroll animations
-    setupScrollAnimations() {
-        const fadeElements = document.querySelectorAll('.service-card, .solution-card, .project-card, .benefit-item');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        });
-
-        fadeElements.forEach(el => observer.observe(el));
-    }
-
-    // Form validation
-    setupFormValidation() {
-        const form = document.querySelector('.modal-form');
-        
-        if (!form) return;
-        
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            let isValid = true;
-            const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
-            
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    isValid = false;
-                    this.showError(input, 'This field is required');
-                } else {
-                    this.clearError(input);
-                }
-            });
-            
-            // Email validation
-            const emailInput = form.querySelector('input[type="email"]');
-            if (emailInput && emailInput.value) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(emailInput.value)) {
-                    isValid = false;
-                    this.showError(emailInput, 'Please enter a valid email address');
-                }
-            }
-            
-            if (isValid) {
-                this.submitForm(form);
-            }
-        });
-    }
-
-    // Show error message
-    showError(input, message) {
-        this.clearError(input);
-        
-        const error = document.createElement('div');
-        error.className = 'error-message';
-        error.textContent = message;
-        error.style.color = '#ff4757';
-        error.style.fontSize = '0.85rem';
-        error.style.marginTop = '0.25rem';
-        
-        input.parentNode.appendChild(error);
-        input.style.borderColor = '#ff4757';
-    }
-
-    // Clear error message
-    clearError(input) {
-        const error = input.parentNode.querySelector('.error-message');
-        if (error) error.remove();
-        input.style.borderColor = '';
-    }
-
-    // Form submission
-    submitForm(form) {
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        
-        // Show loading state
-        submitBtn.innerHTML = '<span>Sending...</span>';
-        submitBtn.disabled = true;
-        
-        // Simulate API call (replace with actual EmailJS integration)
-        setTimeout(() => {
-            // Reset button
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-            
-            // Show success message
-            this.showNotification('Message sent successfully! We\'ll contact you soon.', 'success');
-            
-            // Close modal
-            const modal = document.getElementById('consultationModal');
-            if (modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-            
-            // Reset form
-            form.reset();
-            
-            // Reset reCAPTCHA
-            if (typeof grecaptcha !== 'undefined') {
-                grecaptcha.reset();
-            }
-        }, 2000);
-    }
-
-    // Show notification
-    showNotification(message, type) {
-        const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
-        notification.textContent = message;
-        notification.style.position = 'fixed';
-        notification.style.top = '20px';
-        notification.style.right = '20px';
-        notification.style.padding = '1rem 2rem';
-        notification.style.borderRadius = '8px';
-        notification.style.color = 'white';
-        notification.style.zIndex = '3000';
-        notification.style.opacity = '0';
-        notification.style.transform = 'translateX(100%)';
-        notification.style.transition = 'all 0.3s ease';
-        
-        if (type === 'success') {
-            notification.style.background = '#2ed573';
-        } else {
-            notification.style.background = '#ff4757';
-        }
-        
-        document.body.appendChild(notification);
-        
-        // Animate in
-        setTimeout(() => {
-            notification.style.opacity = '1';
-            notification.style.transform = 'translateX(0)';
-        }, 10);
-        
-        // Remove after 5 seconds
-        setTimeout(() => {
-            notification.style.opacity = '0';
-            notification.style.transform = 'translateX(100%)';
-            
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.remove();
-                }
-            }, 300);
-        }, 5000);
-    }
-
-    // Hero animation
-    setupHeroAnimation() {
-        const hero = document.querySelector('.hero');
-        
-        if (!hero) return;
-        
-        // Parallax effect
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            
-            hero.style.transform = `translate3d(0, ${rate}px, 0)`;
-        });
-    }
-
-    // Initialize on DOM load
-    static init() {
-        document.addEventListener('DOMContentLoaded', () => {
-            new SolarEnergyWebsite();
-        });
-    }
+  // Close menu when clicking a link (mobile)
+  links.addEventListener('click', (e) => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    links.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+  });
 }
 
-// Initialize the website
-SolarEnergyWebsite.init();
-
-// Additional utilities
-window.addEventListener('load', () => {
-    // Add CSS for animations
-    const style = document.createElement('style');
-    style.textContent = `
-        .fade-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .fade-up.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .animate-in {
-            animation: fadeInUp 0.6s ease forwards;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .nav-menu-wrapper.active {
-            display: block !important;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: white;
-            padding: 1rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-        
-        .mobile-menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-        
-        .mobile-menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .mobile-menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-        
-        .g-recaptcha {
-            margin: 1rem 0;
-            display: flex;
-            justify-content: center;
-        }
-        
-        @media (max-width: 768px) {
-            .g-recaptcha {
-                transform: scale(0.85);
-                transform-origin: left;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-});
-
-// EmailJS Integration
-(function() {
-    // Initialize EmailJS
-    emailjs.init("rtxjX2D0E6_QcHS1N");
+// Improved Accordion with smooth animation
+const acc = document.querySelector('[data-accordion]');
+if (acc) {
+  const items = Array.from(acc.querySelectorAll('.acc__item'));
+  
+  items.forEach(btn => {
+    const panel = btn.nextElementSibling;
     
-    // Add reCAPTCHA validation
-    function validateRecaptcha() {
-        const response = grecaptcha.getResponse();
-        if (response.length === 0) {
-            alert("Please complete the reCAPTCHA before submitting.");
-            return false;
+    btn.addEventListener('click', () => {
+      const isOpen = btn.classList.contains('is-open');
+      
+      // Close all other panels
+      items.forEach(otherBtn => {
+        if (otherBtn !== btn && otherBtn.classList.contains('is-open')) {
+          otherBtn.classList.remove('is-open');
+          otherBtn.setAttribute('aria-expanded', 'false');
+          otherBtn.nextElementSibling.classList.remove('is-open');
         }
-        return true;
+      });
+      
+      // Toggle current
+      if (!isOpen) {
+        btn.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+        panel.classList.add('is-open');
+      } else {
+        btn.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        panel.classList.remove('is-open');
+      }
+    });
+  });
+}
+
+// Stat counting animation
+function animateStatCounter(statElement) {
+  const value = parseFloat(statElement.dataset.value);
+  const suffix = statElement.dataset.suffix || '';
+  const duration = 1500; // 1.5 seconds
+  const startTime = performance.now();
+  const startValue = 0;
+  
+  function updateCounter(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // Easing function for smooth animation
+    const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+    const currentValue = startValue + (value - startValue) * easeOutQuart;
+    
+    // Format the number
+    let displayValue;
+    if (value % 1 !== 0) {
+      // Decimal number
+      displayValue = currentValue.toFixed(1);
+    } else {
+      // Whole number
+      displayValue = Math.floor(currentValue).toLocaleString();
     }
     
-    // Update form submission to use EmailJS
-    document.addEventListener('submit', function(e) {
-        if (e.target.classList.contains('modal-form')) {
-            e.preventDefault();
-            
-            if (!validateRecaptcha()) {
-                return;
-            }
-            
-            const formData = {
-                query: e.target.querySelector('textarea').value,
-                responseMethod: e.target.querySelector('select').value,
-                reachTime: e.target.querySelector('input[type="date"]').value,
-                reachDate: e.target.querySelectorAll('select')[1].value,
-                name: e.target.querySelector('input[type="text"]').value,
-                phone: e.target.querySelector('input[type="tel"]').value,
-                email: e.target.querySelector('input[type="email"]').value,
-                location: e.target.querySelectorAll('input[type="text"]')[1].value,
-                source: e.target.querySelectorAll('select')[2].value
-            };
-            
-            emailjs.send("service_twfts9l", "template_umt99gk", formData)
-                .then(function(response) {
-                    alert("Message sent successfully!");
-                    
-                    // Close modal
-                    const modal = document.getElementById('consultationModal');
-                    if (modal) {
-                        modal.style.display = 'none';
-                        document.body.style.overflow = 'auto';
-                        e.target.reset();
-                    }
-                }, function(error) {
-                    alert("Failed to send message. Please try again later.");
-                    console.error('EmailJS error:', error);
-                });
-        }
+    statElement.querySelector('.stat__value').textContent = displayValue + suffix;
+    
+    if (progress < 1) {
+      requestAnimationFrame(updateCounter);
+    }
+  }
+  
+  requestAnimationFrame(updateCounter);
+}
+
+// Staggered reveal for card grids
+function initStaggeredReveal(gridElement, delay = 150) {
+  const items = Array.from(gridElement.querySelectorAll('[data-stagger-item]'));
+  
+  items.forEach((item, index) => {
+    item.style.transitionDelay = `${index * delay}ms`;
+  });
+  
+  // Observe the grid container
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        items.forEach(item => {
+          item.classList.add('is-in');
+        });
+        observer.unobserve(entry.target);
+      }
     });
+  }, { threshold: 0.1 });
+  
+  observer.observe(gridElement);
+}
+
+// Main reveal animations with IntersectionObserver
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (!prefersReduced) {
+  // Section reveal
+  const sectionReveals = document.querySelectorAll('.reveal');
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-in');
+        sectionObserver.unobserve(entry.target);
+        
+        // If this is the stats section, animate stats
+        if (entry.target.closest('#stats')) {
+          setTimeout(() => {
+            const stats = document.querySelectorAll('[data-stat]');
+            stats.forEach((stat, index) => {
+              setTimeout(() => {
+                stat.classList.add('is-in');
+                animateStatCounter(stat);
+              }, index * 200);
+            });
+          }, 300);
+        }
+      }
+    });
+  }, { 
+    threshold: 0.12,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  sectionReveals.forEach(el => sectionObserver.observe(el));
+  
+  // Staggered grid reveals
+  const staggeredGrids = document.querySelectorAll('[data-stagger]');
+  staggeredGrids.forEach(grid => {
+    initStaggeredReveal(grid, 100);
+  });
+  
+  // Stat reveal observer (separate for finer control)
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const stats = entry.target.querySelectorAll('[data-stat]');
+        stats.forEach((stat, index) => {
+          setTimeout(() => {
+            stat.classList.add('is-in');
+            animateStatCounter(stat);
+          }, index * 200);
+        });
+        statObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  
+  const statsSection = document.querySelector('#stats .stats__grid');
+  if (statsSection) {
+    statObserver.observe(statsSection);
+  }
+  
+  // Hover animations
+  const hoverCards = document.querySelectorAll('.feature-card, .service-card, .quote-card, .purpose-card');
+  hoverCards.forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      if (!prefersReduced) {
+        card.style.transform = 'translateY(-4px)';
+        card.style.boxShadow = '0 14px 34px rgba(14,27,42,.14)';
+      }
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      if (!prefersReduced) {
+        card.style.transform = 'translateY(0)';
+        card.style.boxShadow = '0 10px 24px rgba(14,27,42,.08)';
+      }
+    });
+  });
+} else {
+  // Reduced motion fallback
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-in'));
+  document.querySelectorAll('[data-stagger-item]').forEach(el => el.classList.add('is-in'));
+  document.querySelectorAll('[data-stat]').forEach(el => {
+    el.classList.add('is-in');
+    const value = el.dataset.value;
+    const suffix = el.dataset.suffix || '';
+    const displayValue = value % 1 !== 0 ? parseFloat(value).toFixed(1) : parseInt(value).toLocaleString();
+    el.querySelector('.stat__value').textContent = displayValue + suffix;
+  });
+}
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop - 80,
+        behavior: prefersReduced ? 'auto' : 'smooth'
+      });
+    }
+  });
+});
+
+
+
+
+
+// =========== ABOUT US JS ==========
+
+// ============================
+// ABOUT PAGE: reveal + countup
+// ============================
+
+(function initAboutPage() {
+  const aboutRoot = document.querySelector('.about-page');
+  if (!aboutRoot) return;
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Reveal on scroll
+  const revealEls = aboutRoot.querySelectorAll('.about-reveal');
+  if (!prefersReduced && revealEls.length) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('is-in'));
+  }
+
+  // Count-up (Our Impact)
+  const impactSection = document.querySelector('#aboutImpact');
+  if (!impactSection) return;
+
+  const counters = impactSection.querySelectorAll('[data-countup]');
+  if (!counters.length) return;
+
+  const parseTarget = (el) => {
+    const raw = String(el.getAttribute('data-countup') || '0').trim();
+    const suffix = String(el.getAttribute('data-suffix') || '');
+    const target = Number(raw.replace(/,/g, ''));
+    const hasDecimal = raw.includes('.');
+    return { target, suffix, hasDecimal };
+  };
+
+  const formatValue = (value, hasDecimal, suffix) => {
+    // keep 1 decimal if target had decimals, else integer
+    const out = hasDecimal ? value.toFixed(1) : Math.round(value).toString();
+    return `${out}${suffix}`;
+  };
+
+  const animateCounter = (el, durationMs = 1500) => {
+    const { target, suffix, hasDecimal } = parseTarget(el);
+    const start = 0;
+    const startTime = performance.now();
+
+    const step = (now) => {
+      const t = Math.min(1, (now - startTime) / durationMs);
+      // ease-out
+      const eased = 1 - Math.pow(1 - t, 3);
+      const current = start + (target - start) * eased;
+
+      el.textContent = formatValue(current, hasDecimal, suffix);
+
+      if (t < 1) requestAnimationFrame(step);
+      else el.textContent = formatValue(target, hasDecimal, suffix);
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  if (prefersReduced) {
+    // no animation, just set final values
+    counters.forEach((el) => {
+      const { target, suffix, hasDecimal } = parseTarget(el);
+      el.textContent = formatValue(target, hasDecimal, suffix);
+    });
+    return;
+  }
+
+  let started = false;
+  const ioCount = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting && !started) {
+        started = true;
+        counters.forEach((el, idx) => {
+          // slight stagger
+          setTimeout(() => animateCounter(el, 1400), idx * 90);
+        });
+        ioCount.disconnect();
+      }
+    });
+  }, { threshold: 0.25 });
+
+  ioCount.observe(impactSection);
+})(); 
+
+
+
+
+
+// ServicesX carousel: auto-play + clickable cards + drag + wheel support
+(function initServicesXCarousel() {
+  const track = document.getElementById('services-track');
+  if (!track) return;
+
+  const cards = track.querySelectorAll('.servicesX__card');
+  let autoScrollInterval;
+  const scrollSpeed = 3000; // Change slide every 3 seconds
+  let isDragging = false;
+  let userInteracted = false;
+
+  // ===== AUTO-PLAY FUNCTIONALITY =====
+  function startAutoScroll() {
+    if (userInteracted) return; // Don't auto-scroll if user interacted
+    
+    stopAutoScroll(); // Clear existing interval
+    
+    autoScrollInterval = setInterval(() => {
+      if (isDragging || userInteracted) return;
+      
+      const maxScroll = track.scrollWidth - track.clientWidth;
+      const currentScroll = track.scrollLeft;
+      const cardWidth = cards[0]?.offsetWidth + 20 || 300; // Card width + gap
+      
+      // If at the end, scroll back to start
+      if (currentScroll >= maxScroll - 10) {
+        track.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        // Scroll to next card
+        track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      }
+    }, scrollSpeed);
+  }
+
+  function stopAutoScroll() {
+    if (autoScrollInterval) {
+      clearInterval(autoScrollInterval);
+      autoScrollInterval = null;
+    }
+  }
+
+  // ===== CLICKABLE CARDS =====
+  cards.forEach(card => {
+    // Get the link from data attribute or arrow href
+    const arrowLink = card.querySelector('.servicesX__go');
+    const cardLink = card.dataset.cardLink || arrowLink?.getAttribute('href') || '#';
+    
+    // Make entire card clickable
+    card.addEventListener('click', (e) => {
+      // Don't trigger if clicking the arrow itself (arrow has its own handler)
+      if (e.target.closest('.servicesX__go')) return;
+      
+      // Don't trigger while dragging
+      if (isDragging) return;
+      
+      // Navigate to the link
+      window.location.href = cardLink;
+    });
+    
+    // Add keyboard accessibility
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (e.target.closest('.servicesX__go')) return;
+        window.location.href = cardLink;
+      }
+    });
+    
+    // Make card focusable
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+  });
+
+  // ===== DRAG TO SCROLL =====
+  let startX, startLeft, pointerId;
+
+  track.addEventListener('pointerdown', (e) => {
+    isDragging = true;
+    userInteracted = true; // Stop auto-scroll on user interaction
+    stopAutoScroll();
+    
+    track.setPointerCapture(e.pointerId);
+    pointerId = e.pointerId;
+    startX = e.clientX;
+    startLeft = track.scrollLeft;
+    track.classList.add('is-dragging');
+    track.style.cursor = 'grabbing';
+  });
+
+  track.addEventListener('pointermove', (e) => {
+    if (!isDragging || e.pointerId !== pointerId) return;
+    e.preventDefault(); // Prevent selection while dragging
+    
+    const dx = e.clientX - startX;
+    track.scrollLeft = startLeft - dx;
+  });
+
+  const endDrag = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    track.classList.remove('is-dragging');
+    track.style.cursor = 'grab';
+    
+    // Restart auto-scroll after 5 seconds of inactivity
+    setTimeout(() => {
+      userInteracted = false;
+      startAutoScroll();
+    }, 5000);
+  };
+
+  track.addEventListener('pointerup', endDrag);
+  track.addEventListener('pointercancel', endDrag);
+
+  // ===== WHEEL TO HORIZONTAL SCROLL =====
+  track.addEventListener('wheel', (e) => {
+    // If user is trying to scroll vertically, convert to horizontal
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      track.scrollLeft += e.deltaY;
+      
+      // User interacted, pause auto-scroll temporarily
+      userInteracted = true;
+      stopAutoScroll();
+      
+      // Restart after 5 seconds
+      setTimeout(() => {
+        userInteracted = false;
+        startAutoScroll();
+      }, 5000);
+    }
+  }, { passive: false });
+
+  // ===== PAUSE ON HOVER =====
+  track.addEventListener('mouseenter', () => {
+    stopAutoScroll();
+  });
+
+  track.addEventListener('mouseleave', () => {
+    if (!userInteracted) {
+      startAutoScroll();
+    }
+  });
+
+  // ===== RESET ON WINDOW RESIZE =====
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    stopAutoScroll();
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      if (!userInteracted) {
+        startAutoScroll();
+      }
+    }, 200);
+  });
+
+  // ===== INITIAL START =====
+  // Start auto-scroll after a short delay
+  setTimeout(() => {
+    track.style.cursor = 'grab';
+    startAutoScroll();
+  }, 1000);
+
+  // ===== TOUCH DEVICE SUPPORT =====
+  track.addEventListener('touchstart', () => {
+    userInteracted = true;
+    stopAutoScroll();
+  }, { passive: true });
+
+  track.addEventListener('touchend', () => {
+    setTimeout(() => {
+      userInteracted = false;
+      startAutoScroll();
+    }, 5000);
+  });
 })();
 
 
 
 
-// ============================================
-// ABOUT US PAGE FUNCTIONALITY
-// ============================================
+// =========================================
+// ProjectsX carousel: autoplay (2.5s) + drag + wheel -> horizontal
+// =========================================
+(function initProjectsXCarousel(){
+  const track = document.querySelector('[data-projectsx-track]');
+  if (!track) return;
 
-class AboutUsPage extends SolarEnergyWebsite {
-    constructor() {
-        super();
-        this.setupAboutPageAnimations();
+  // ---- wheel -> horizontal
+  track.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      track.scrollLeft += e.deltaY;
+    }
+  }, { passive: false });
+
+  // ---- drag to scroll
+  let isDown = false;
+  let startX = 0;
+  let startLeft = 0;
+  let userInteracting = false;
+  let interactTimeout = null;
+
+  const markInteracting = () => {
+    userInteracting = true;
+    clearTimeout(interactTimeout);
+    interactTimeout = setTimeout(() => userInteracting = false, 1400);
+  };
+
+  track.addEventListener('pointerdown', (e) => {
+    isDown = true;
+    markInteracting();
+    track.setPointerCapture(e.pointerId);
+    startX = e.clientX;
+    startLeft = track.scrollLeft;
+    track.classList.add('is-dragging');
+  });
+
+  track.addEventListener('pointermove', (e) => {
+    if (!isDown) return;
+    markInteracting();
+    const dx = e.clientX - startX;
+    track.scrollLeft = startLeft - dx;
+  });
+
+  const endDrag = () => {
+    isDown = false;
+    track.classList.remove('is-dragging');
+  };
+
+  track.addEventListener('pointerup', endDrag);
+  track.addEventListener('pointercancel', endDrag);
+
+  // Pause when hovering
+  track.addEventListener('mouseenter', markInteracting);
+
+  // ---- autoplay every 2.5s
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  const getCardWidth = () => {
+    const card = track.querySelector('.projectsX__card');
+    if (!card) return 360;
+    const styles = window.getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap || '18') || 18;
+    return card.getBoundingClientRect().width + gap;
+  };
+
+  const scrollNext = () => {
+    if (userInteracting) return;
+
+    const step = getCardWidth();
+    const maxScroll = track.scrollWidth - track.clientWidth;
+
+    // If near the end, go back to start smoothly
+    if (track.scrollLeft + step >= maxScroll - 4) {
+      track.scrollTo({ left: 0, behavior: 'smooth' });
+      return;
     }
 
-    // Setup animations specific to About page
-    setupAboutPageAnimations() {
-        this.setupObjectiveCardsAnimation();
-        this.setupScrollAnimations();
-    }
+    track.scrollBy({ left: step, behavior: 'smooth' });
+  };
 
-    // Animate objective cards when they enter viewport
-    setupObjectiveCardsAnimation() {
-        const cards = document.querySelectorAll('.objective-card');
+  setInterval(scrollNext, 2500);
+})();
+
+
+
+
+
+/**
+ * MO Solar Energy - Main JavaScript
+ * Handles all animations: scroll reveals, stagger effects, and carousels
+ */
+
+(function() {
+  'use strict';
+
+  // ==================== ANIMATION CONFIGURATION ====================
+  const animationConfig = {
+    threshold: 0.2,           // Element becomes visible when 20% in view
+    rootMargin: '0px 0px -50px 0px',  // Slight offset for better UX
+    staggerDelay: 0.1,         // 100ms between staggered items
+    defaultDuration: 0.6,       // 600ms animation
+    mobileThreshold: 768        // Mobile breakpoint
+  };
+
+  // ==================== INITIALIZATION ====================
+  function initAnimations() {
+    // Set initial states for animated elements
+    prepareAnimatedElements();
+    
+    // Create intersection observer for scroll animations
+    const observer = createScrollObserver();
+    
+    // Observe all sections and animated elements
+    observeElements(observer);
+    
+    // Handle any elements that should animate on page load
+    handleInitialAnimations();
+  }
+
+  // ==================== PREPARE ELEMENTS ====================
+  function prepareAnimatedElements() {
+    // Elements with data-animate attribute
+    document.querySelectorAll('[data-animate]').forEach(el => {
+      // Don't override if already prepared
+      if (!el.classList.contains('anim-ready')) {
+        el.classList.add('anim-ready');
+        el.style.opacity = '0';
+        el.style.transition = `opacity ${animationConfig.defaultDuration}s ease, transform ${animationConfig.defaultDuration}s ease`;
         
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('animate-in');
-                    }, index * 100); // Staggered animation
-                    
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px 0px -100px 0px'
-        });
-
-        cards.forEach(card => observer.observe(card));
-    }
-
-    // Setup scroll animations for story sections
-    setupScrollAnimations() {
-        const storySections = document.querySelectorAll('.story-content, .why-content');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, {
-            threshold: 0.3,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        storySections.forEach(section => observer.observe(section));
-    }
-}
-
-// Initialize About Us page when on about.html
-if (window.location.pathname.includes('about.html')) {
-    document.addEventListener('DOMContentLoaded', () => {
-        new AboutUsPage();
-        
-        // Add active class to current page in navigation
-        const currentPageLink = document.querySelector('a[href="about.html"]');
-        if (currentPageLink) {
-            currentPageLink.classList.add('active');
-        }
+        // Set initial transform based on animation type
+        const animType = el.dataset.animate;
+        setInitialTransform(el, animType);
+      }
     });
-}
 
-// Add animation styles
-window.addEventListener('load', () => {
-    const style = document.createElement('style');
-    style.textContent = `
-        .objective-card {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+    // Elements with data-stagger (parent containers)
+    document.querySelectorAll('[data-stagger]').forEach(container => {
+      const items = container.querySelectorAll('[data-stagger-item]');
+      items.forEach((item, index) => {
+        if (!item.classList.contains('anim-ready')) {
+          item.classList.add('anim-ready');
+          item.style.opacity = '0';
+          item.style.transition = `opacity ${animationConfig.defaultDuration}s ease, transform ${animationConfig.defaultDuration}s ease`;
+          item.style.transform = 'translateY(30px)';
+          
+          // Store original delay if specified, otherwise use staggered default
+          const baseDelay = parseFloat(item.dataset.delay) || 0;
+          const staggerIndex = index * animationConfig.staggerDelay;
+          item.dataset.totalDelay = (baseDelay + staggerIndex).toFixed(1);
         }
-        
-        .objective-card.animate-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .story-content,
-        .why-content {
-            opacity: 0;
-            transform: translateX(-30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .story-content.fade-in,
-        .why-content.fade-in {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .stack-card {
-            transition: transform 0.3s ease;
-        }
-        
-        .nav-link.active .nav-highlight {
-            width: 100%;
-        }
-        
-        .dropdown-link.active {
-            color: var(--primary-accent);
-            font-weight: 600;
-        }
-    `;
-    document.head.appendChild(style);
-});
-
-
-
-
-
-// ============================================
-// WHY CHOOSE US PAGE FUNCTIONALITY
-// ============================================
-
-class WhyChooseUsPage extends SolarEnergyWebsite {
-    constructor() {
-        super();
-        this.setupWhyChooseUsAnimations();
-        this.initStatsCounter();
-    }
-
-    // Setup animations specific to Why Choose Us page
-    setupWhyChooseUsAnimations() {
-        this.setupFeatureCardsAnimation();
-        this.setupBenefitItemsAnimation();
-        this.setupScrollAnimations();
-    }
-
-    // Animate feature cards when they enter viewport
-    setupFeatureCardsAnimation() {
-        const cards = document.querySelectorAll('.why-feature-card');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('animate-in');
-                    }, index * 150); // Staggered animation
-                    
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px 0px -100px 0px'
-        });
-
-        cards.forEach(card => observer.observe(card));
-    }
-
-    // Animate benefit items
-    setupBenefitItemsAnimation() {
-        const items = document.querySelectorAll('.benefit-item');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('slide-in');
-                    }, index * 100);
-                    
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        items.forEach(item => observer.observe(item));
-    }
-
-    // Initialize animated counter for stats
-    initStatsCounter() {
-        const statNumbers = document.querySelectorAll('.stat-number');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    this.animateStatCounter(entry.target);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.5
-        });
-
-        statNumbers.forEach(stat => observer.observe(stat));
-    }
-
-    // Animate counter for statistics
-    animateStatCounter(element) {
-        const target = element.textContent;
-        const count = parseInt(target);
-        const is24 = target === '24/7';
-        
-        if (is24) {
-            // For 24/7, just show immediately
-            element.textContent = target;
-            return;
-        }
-        
-        const duration = 2000; // 2 seconds
-        const increment = count / (duration / 16); // 60fps
-        
-        let current = 0;
-        
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= count) {
-                current = count;
-                clearInterval(timer);
-            }
-            element.textContent = Math.floor(current) + '+';
-        }, 16);
-    }
-
-    // Setup scroll animations
-    setupScrollAnimations() {
-        const sections = document.querySelectorAll('.why-intro, .cta-content');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                }
-            });
-        }, {
-            threshold: 0.3,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        sections.forEach(section => observer.observe(section));
-    }
-}
-
-// Initialize Why Choose Us page when on why choose us.html
-if (window.location.pathname.includes('why choose us.html')) {
-    document.addEventListener('DOMContentLoaded', () => {
-        new WhyChooseUsPage();
-        
-        // Add active class to current page in navigation
-        const currentPageLink = document.querySelector('a[href*="why choose us.html"]');
-        if (currentPageLink) {
-            currentPageLink.classList.add('active');
-        }
+      });
     });
-}
 
-// Add animation styles
-window.addEventListener('load', () => {
-    const style = document.createElement('style');
-    style.textContent = `
-        .why-feature-card {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .why-feature-card.animate-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .benefit-item {
-            opacity: 0;
-            transform: translateX(-30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .benefit-item.slide-in {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .why-intro,
-        .cta-content {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .why-intro.fade-in,
-        .cta-content.fade-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .stat-number {
-            transition: all 0.3s ease;
-        }
-        
-        .nav-link.active .nav-highlight {
-            width: 100%;
-        }
-        
-        .dropdown-link.active {
-            color: var(--primary-accent);
-            font-weight: 600;
-        }
-        
-        .cta-image img {
-            transition: transform 0.6s ease;
-        }
-    `;
-    document.head.appendChild(style);
-});
-
-
-
-
-
-// ============================================
-// MISSION & VISION PAGE FUNCTIONALITY
-// ============================================
-
-class MissionVisionPage extends SolarEnergyWebsite {
-    constructor() {
-        super();
-        this.setupMissionPageAnimations();
-    }
-
-    // Setup animations specific to Mission & Vision page
-    setupMissionPageAnimations() {
-        this.setupOverviewCardsAnimation();
-        this.setupValuesAnimation();
-        this.setupGoalsAnimation();
-        this.initImpactStatsCounter();
-        this.setupScrollAnimations();
-    }
-
-    // Animate overview cards when they enter viewport
-    setupOverviewCardsAnimation() {
-        const cards = document.querySelectorAll('.overview-card');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('slide-in');
-                    }, index * 200);
-                    
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px 0px -100px 0px'
-        });
-
-        cards.forEach(card => observer.observe(card));
-    }
-
-    // Animate value cards with staggered effect
-    setupValuesAnimation() {
-        const values = document.querySelectorAll('.value-card');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('pop-in');
-                    }, index * 100);
-                    
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        values.forEach(value => observer.observe(value));
-    }
-
-    // Animate goals list items
-    setupGoalsAnimation() {
-        const goals = document.querySelectorAll('.goal-item');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('fade-in');
-                    }, index * 150);
-                    
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        goals.forEach(goal => observer.observe(goal));
-    }
-
-    // Initialize animated counter for impact stats
-    initImpactStatsCounter() {
-        const statNumbers = document.querySelectorAll('.impact-stat .stat-number');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    this.animateImpactCounter(entry.target);
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.5
-        });
-
-        statNumbers.forEach(stat => observer.observe(stat));
-    }
-
-    // Animate counter for impact statistics
-    animateImpactCounter(element) {
-        const targetText = element.textContent;
-        const target = parseInt(targetText.replace('+', ''));
-        const hasPlus = targetText.includes('+');
-        
-        const duration = 2000; // 2 seconds
-        const increment = target / (duration / 16); // 60fps
-        
-        let current = 0;
-        
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            element.textContent = Math.floor(current) + (hasPlus ? '+' : '');
-        }, 16);
-    }
-
-    // Setup scroll animations for content sections
-    setupScrollAnimations() {
-        const sections = document.querySelectorAll('.goals-header, .impact-header, .mission-cta .cta-content');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal');
-                }
-            });
-        }, {
-            threshold: 0.3,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        sections.forEach(section => observer.observe(section));
-    }
-}
-
-// Initialize Mission & Vision page when on mission.html
-if (window.location.pathname.includes('mission.html')) {
-    document.addEventListener('DOMContentLoaded', () => {
-        new MissionVisionPage();
-        
-        // Add active class to current page in navigation
-        const currentPageLink = document.querySelector('a[href*="mission.html"]');
-        if (currentPageLink) {
-            currentPageLink.classList.add('active');
-        }
+    // Sections with data-section
+    document.querySelectorAll('[data-section]').forEach(section => {
+      if (!section.classList.contains('anim-ready')) {
+        section.classList.add('anim-ready');
+        section.style.opacity = '0';
+        section.style.transition = `opacity ${animationConfig.defaultDuration}s ease`;
+      }
     });
-}
+  }
 
-// Add animation styles
-window.addEventListener('load', () => {
-    const style = document.createElement('style');
-    style.textContent = `
-        .overview-card {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .overview-card.vision {
-            transform: translateX(50px);
-        }
-        
-        .overview-card.slide-in {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .value-card {
-            opacity: 0;
-            transform: scale(0.8);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .value-card.pop-in {
-            opacity: 1;
-            transform: scale(1);
-        }
-        
-        .goal-item {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .goal-item.fade-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .goals-header,
-        .impact-header,
-        .mission-cta .cta-content {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .goals-header.reveal,
-        .impact-header.reveal,
-        .mission-cta .cta-content.reveal {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .stat-number {
-            transition: all 0.3s ease;
-        }
-        
-        .nav-link.active .nav-highlight {
-            width: 100%;
-        }
-        
-        .dropdown-link.active {
-            color: var(--primary-accent);
-            font-weight: 600;
-        }
-        
-        .visual-image img {
-            transition: transform 0.6s ease;
-        }
-        
-        .visual-container:hover .visual-image img {
-            transform: scale(1.05);
-        }
-    `;
-    document.head.appendChild(style);
-});
-
-
-
-
-
-// ============================================
-// SERVICES PAGE FUNCTIONALITY
-// ============================================
-
-class ServicesPage extends SolarEnergyWebsite {
-    constructor() {
-        super();
-        this.setupServicesPageAnimations();
+  // Set initial transform based on animation type
+  function setInitialTransform(el, animType) {
+    switch(animType) {
+      case 'fade-up':
+      case 'fade-up-stagger':
+        el.style.transform = 'translateY(40px)';
+        break;
+      case 'fade-down':
+        el.style.transform = 'translateY(-40px)';
+        break;
+      case 'fade-left':
+        el.style.transform = 'translateX(40px)';
+        break;
+      case 'fade-right':
+        el.style.transform = 'translateX(-40px)';
+        break;
+      case 'zoom-in':
+        el.style.transform = 'scale(0.95)';
+        break;
+      case 'zoom-out':
+        el.style.transform = 'scale(1.05)';
+        break;
+      default:
+        el.style.transform = 'translateY(30px)';
     }
+  }
 
-    // Setup animations specific to Services page
-    setupServicesPageAnimations() {
-        this.setupServiceCardsAnimation();
-        this.setupProcessStepsAnimation();
-        this.setupMiniGridAnimation();
-        this.setupAdditionalServicesAnimation();
-        this.setupScrollAnimations();
-    }
-
-    // Animate service cards when they enter viewport
-    setupServiceCardsAnimation() {
-        const cards = document.querySelectorAll('.service-card');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('pop-in');
-                    }, index * 150); // Staggered animation
-                    
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px 0px -100px 0px'
-        });
-
-        cards.forEach(card => observer.observe(card));
-    }
-
-    // Animate process steps
-    setupProcessStepsAnimation() {
-        const steps = document.querySelectorAll('.process-step');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('slide-up');
-                    }, index * 100);
-                    
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        steps.forEach(step => observer.observe(step));
-    }
-
-    // Animate mini-grid section
-    setupMiniGridAnimation() {
-        const miniGrid = document.querySelector('.mini-grid-content');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.3,
-            rootMargin: '0px 0px -100px 0px'
-        });
-
-        if (miniGrid) observer.observe(miniGrid);
-    }
-
-    // Animate additional services cards
-    setupAdditionalServicesAnimation() {
-        const cards = document.querySelectorAll('.additional-card');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('slide-in');
-                    }, index * 200);
-                    
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        cards.forEach(card => observer.observe(card));
-    }
-
-    // Setup scroll animations for headers
-    setupScrollAnimations() {
-        const headers = document.querySelectorAll('.overview-header, .section-header, .process-header');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal');
-                }
-            });
-        }, {
-            threshold: 0.3,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        headers.forEach(header => observer.observe(header));
-    }
-}
-
-// Initialize Services page when on strategy.html
-if (window.location.pathname.includes('strategy.html')) {
-    document.addEventListener('DOMContentLoaded', () => {
-        new ServicesPage();
-        
-        // Add active class to current page in navigation
-        const currentPageLink = document.querySelector('a[href*="strategy.html"]');
-        if (currentPageLink) {
-            currentPageLink.classList.add('active');
+  // ==================== CREATE OBSERVER ====================
+  function createScrollObserver() {
+    return new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          
+          // Handle section animations
+          if (el.hasAttribute('data-section')) {
+            animateSection(el);
+          }
+          
+          // Handle individual animated elements
+          if (el.hasAttribute('data-animate')) {
+            animateElement(el);
+          }
+          
+          // Handle stagger containers
+          if (el.hasAttribute('data-stagger')) {
+            animateStaggerContainer(el);
+          }
+          
+          // Stop observing after animation (optional)
+          // observer.unobserve(el); // Uncomment if you want one-time animation
         }
+      });
+    }, {
+      threshold: animationConfig.threshold,
+      rootMargin: animationConfig.rootMargin
     });
-}
+  }
 
-// Add animation styles
-window.addEventListener('load', () => {
-    const style = document.createElement('style');
-    style.textContent = `
-        .service-card {
-            opacity: 0;
-            transform: translateY(40px) scale(0.95);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .service-card.pop-in {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-        
-        .process-step {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .process-step.slide-up {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .mini-grid-content {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .mini-grid-content.fade-in {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .additional-card {
-            opacity: 0;
-            transform: translateX(-100px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .additional-card:nth-child(even) {
-            transform: translateX(100px);
-        }
-        
-        .additional-card.slide-in {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .overview-header,
-        .section-header,
-        .process-header {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .overview-header.reveal,
-        .section-header.reveal,
-        .process-header.reveal {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .nav-link.active .nav-highlight {
-            width: 100%;
-        }
-        
-        .dropdown-link.active {
-            color: var(--primary-accent);
-            font-weight: 600;
-        }
-        
-        .visual-image img {
-            transition: transform 0.6s ease;
-        }
-        
-        .visual-card:hover .visual-image img {
-            transform: scale(1.05);
-        }
-        
-        .service-card:hover {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-    `;
-    document.head.appendChild(style);
-});
+  // ==================== OBSERVE ELEMENTS ====================
+  function observeElements(observer) {
+    // Observe sections
+    document.querySelectorAll('[data-section]').forEach(section => {
+      observer.observe(section);
+    });
 
+    // Observe individual animated elements
+    document.querySelectorAll('[data-animate]').forEach(el => {
+      observer.observe(el);
+    });
 
+    // Observe stagger containers
+    document.querySelectorAll('[data-stagger]').forEach(container => {
+      observer.observe(container);
+    });
+  }
 
+  // ==================== ANIMATION FUNCTIONS ====================
+  function animateSection(section) {
+    section.style.opacity = '1';
+    section.classList.add('is-visible');
+    
+    // Animate children in order
+    const children = section.querySelectorAll('[data-animate]');
+    children.forEach((child, index) => {
+      const delay = parseFloat(child.dataset.delay) || index * 0.1;
+      setTimeout(() => {
+        animateElement(child, true);
+      }, delay * 1000);
+    });
+  }
 
+  function animateElement(el, skipDelay = false) {
+    if (el.classList.contains('is-visible')) return;
+    
+    const delay = skipDelay ? 0 : (parseFloat(el.dataset.delay) || 0);
+    
+    setTimeout(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'translate(0) scale(1)';
+      el.classList.add('is-visible');
+    }, delay * 1000);
+  }
 
-// ============================================
-// CONTACT US PAGE FUNCTIONALITY
-// ============================================
+  function animateStaggerContainer(container) {
+    if (container.classList.contains('is-visible')) return;
+    
+    container.classList.add('is-visible');
+    
+    const items = container.querySelectorAll('[data-stagger-item]');
+    items.forEach(item => {
+      const totalDelay = parseFloat(item.dataset.totalDelay) || 0;
+      
+      setTimeout(() => {
+        item.style.opacity = '1';
+        item.style.transform = 'translate(0) scale(1)';
+        item.classList.add('is-in');
+      }, totalDelay * 1000);
+    });
+  }
 
-class ContactUsPage extends SolarEnergyWebsite {
-    constructor() {
-        super();
-        this.setupContactPageAnimations();
-        this.initContactForm();
-    }
-
-    // Setup animations specific to Contact page
-    setupContactPageAnimations() {
-        this.setupContactCardsAnimation();
-        this.setupFormAnimation();
-        this.setupMapAnimation();
-        this.setupScrollAnimations();
-    }
-
-    // Animate contact cards when they enter viewport
-    setupContactCardsAnimation() {
-        const cards = document.querySelectorAll('.contact-card');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('pop-in');
-                    }, index * 150); // Staggered animation
-                    
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.2,
-            rootMargin: '0px 0px -100px 0px'
-        });
-
-        cards.forEach(card => observer.observe(card));
-    }
-
-    // Animate form section
-    setupFormAnimation() {
-        const formContainer = document.querySelector('.form-container');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('slide-in');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.3,
-            rootMargin: '0px 0px -100px 0px'
-        });
-
-        if (formContainer) observer.observe(formContainer);
-    }
-
-    // Animate map section
-    setupMapAnimation() {
-        const mapContainer = document.querySelector('.map-container');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('fade-in');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.3,
-            rootMargin: '0px 0px -100px 0px'
-        });
-
-        if (mapContainer) observer.observe(mapContainer);
-    }
-
-    // Initialize contact form functionality
-    initContactForm() {
-        const contactForm = document.getElementById('contactForm');
-        
-        if (contactForm) {
-            contactForm.addEventListener('submit', this.handleFormSubmit.bind(this));
-            
-            // Set min date for date field (today)
-            const dateField = document.getElementById('date');
-            if (dateField) {
-                const today = new Date().toISOString().split('T')[0];
-                dateField.min = today;
-                
-                // Set default to tomorrow
-                const tomorrow = new Date();
-                tomorrow.setDate(tomorrow.getDate() + 1);
-                dateField.value = tomorrow.toISOString().split('T')[0];
-            }
-            
-            // Phone number formatting
-            const phoneField = document.getElementById('phone');
-            if (phoneField) {
-                phoneField.addEventListener('input', this.formatPhoneNumber.bind(this));
-            }
-        }
-    }
-
-    // Format phone number input
-    formatPhoneNumber(event) {
-        let value = event.target.value.replace(/\D/g, '');
-        
-        if (value.length > 0) {
-            value = value.match(/.{1,4}/g).join('-');
-        }
-        
-        event.target.value = value;
-    }
-
-    // Handle form submission
-    handleFormSubmit(event) {
-        event.preventDefault();
-        
-        const form = event.target;
-        const submitButton = form.querySelector('.submit-button');
-        const originalText = submitButton.innerHTML;
-        
-        // Show loading state
-        submitButton.innerHTML = '<span>Sending...</span>';
-        submitButton.disabled = true;
-        
-        // Collect form data
-        const formData = {
-            message: form.message.value,
-            date: form.date.value,
-            name: form.name.value,
-            phone: form.phone.value,
-            email: form.email.value,
-            location: form.location.value,
-            source: form.source.value
-        };
-        
-        // In production, replace with your EmailJS or backend API
-        // For now, simulate API call
+  // ==================== INITIAL PAGE LOAD ANIMATIONS ====================
+  function handleInitialAnimations() {
+    // Animate elements visible on page load
+    setTimeout(() => {
+      const heroElements = document.querySelectorAll('.hero [data-animate]');
+      heroElements.forEach((el, index) => {
+        const delay = parseFloat(el.dataset.delay) || index * 0.1;
         setTimeout(() => {
-            // Simulate successful submission
-            this.showSuccessMessage(form);
-            
-            // Reset form
-            form.reset();
-            
-            // Reset button
-            submitButton.innerHTML = originalText;
-            submitButton.disabled = false;
-        }, 1500);
+          el.style.opacity = '1';
+          el.style.transform = 'translate(0) scale(1)';
+          el.classList.add('is-visible');
+        }, delay * 1000);
+      });
+    }, 100);
+  }
+
+  // ==================== SERVICES CAROUSEL (from your previous code) ====================
+  function initServicesCarousel() {
+    const track = document.getElementById('services-track');
+    if (!track) return;
+
+    const cards = track.querySelectorAll('.servicesX__card');
+    let autoScrollInterval;
+    const scrollSpeed = 3000;
+    let isDragging = false;
+    let userInteracted = false;
+
+    function startAutoScroll() {
+      if (userInteracted) return;
+      stopAutoScroll();
+      
+      autoScrollInterval = setInterval(() => {
+        if (isDragging || userInteracted) return;
+        
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        const currentScroll = track.scrollLeft;
+        const cardWidth = cards[0]?.offsetWidth + 18 || 300;
+        
+        if (currentScroll >= maxScroll - 10) {
+          track.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          track.scrollBy({ left: cardWidth, behavior: 'smooth' });
+        }
+      }, scrollSpeed);
     }
 
-    // Show success message
-    showSuccessMessage(form) {
-        // Create success message
-        const successDiv = document.createElement('div');
-        successDiv.className = 'success-message';
-        successDiv.innerHTML = `
-            <svg viewBox="0 0 24 24">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
-            <div>
-                <h4>Message Sent Successfully!</h4>
-                <p>Thank you for contacting MO Solar Energy. We'll get back to you within 24 hours.</p>
-            </div>
-        `;
+    function stopAutoScroll() {
+      if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+      }
+    }
+
+    // Clickable cards
+    cards.forEach(card => {
+      const arrowLink = card.querySelector('.servicesX__go');
+      const cardLink = card.dataset.cardLink || arrowLink?.getAttribute('href') || '#';
+      
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.servicesX__go')) return;
+        if (isDragging) return;
+        window.location.href = cardLink;
+      });
+      
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('role', 'button');
+    });
+
+    // Drag functionality
+    let startX, startLeft, pointerId;
+
+    track.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      userInteracted = true;
+      stopAutoScroll();
+      
+      track.setPointerCapture(e.pointerId);
+      pointerId = e.pointerId;
+      startX = e.clientX;
+      startLeft = track.scrollLeft;
+      track.classList.add('is-dragging');
+      track.style.cursor = 'grabbing';
+    });
+
+    track.addEventListener('pointermove', (e) => {
+      if (!isDragging || e.pointerId !== pointerId) return;
+      e.preventDefault();
+      
+      const dx = e.clientX - startX;
+      track.scrollLeft = startLeft - dx;
+    });
+
+    const endDrag = () => {
+      if (!isDragging) return;
+      isDragging = false;
+      track.classList.remove('is-dragging');
+      track.style.cursor = 'grab';
+      
+      setTimeout(() => {
+        userInteracted = false;
+        startAutoScroll();
+      }, 5000);
+    };
+
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+
+    // Wheel support
+    track.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        track.scrollLeft += e.deltaY;
         
-        // Insert before form
-        form.parentNode.insertBefore(successDiv, form);
+        userInteracted = true;
+        stopAutoScroll();
         
-        // Remove message after 5 seconds
         setTimeout(() => {
-            successDiv.remove();
+          userInteracted = false;
+          startAutoScroll();
         }, 5000);
-    }
+      }
+    }, { passive: false });
 
-    // Setup scroll animations
-    setupScrollAnimations() {
-        const headers = document.querySelectorAll('.form-header, .map-header');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal');
-                }
-            });
-        }, {
-            threshold: 0.3,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        headers.forEach(header => observer.observe(header));
-    }
-}
-
-// Initialize Contact Us page when on contact-us.html
-if (window.location.pathname.includes('contact-us.html')) {
-    document.addEventListener('DOMContentLoaded', () => {
-        new ContactUsPage();
-        
-        // Add active class to current page in navigation
-        const currentPageLink = document.querySelector('a[href*="contact-us.html"]');
-        if (currentPageLink) {
-            currentPageLink.classList.add('active');
-        }
+    // Hover pause
+    track.addEventListener('mouseenter', stopAutoScroll);
+    track.addEventListener('mouseleave', () => {
+      if (!userInteracted) startAutoScroll();
     });
-}
 
-// Add animation styles
-window.addEventListener('load', () => {
-    const style = document.createElement('style');
-    style.textContent = `
-        .contact-card {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .contact-card.pop-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .form-container {
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .form-container.slide-in {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        
-        .map-container {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        
-        .map-container.fade-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .form-header,
-        .map-header {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        
-        .form-header.reveal,
-        .map-header.reveal {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .nav-link.active .nav-highlight {
-            width: 100%;
-        }
-        
-        .nav-button.active {
-            background: var(--primary-accent);
-            color: var(--primary-dark);
-        }
-        
-        .success-message {
-            background: rgba(76, 175, 80, 0.1);
-            border: 2px solid #4CAF50;
-            border-radius: var(--radius-medium);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            animation: slideDown 0.5s ease;
-        }
-        
-        .success-message svg {
-            width: 24px;
-            height: 24px;
-            fill: #4CAF50;
-            flex-shrink: 0;
-            margin-top: 0.25rem;
-        }
-        
-        .success-message h4 {
-            color: var(--primary-dark);
-            margin-bottom: 0.5rem;
-        }
-        
-        .success-message p {
-            color: #666;
-            line-height: 1.6;
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
+    // Initialize
+    setTimeout(() => {
+      track.style.cursor = 'grab';
+      startAutoScroll();
+    }, 1000);
+  }
+
+  // ==================== PROJECTS CAROUSEL ====================
+  function initProjectsCarousel() {
+    const track = document.querySelector('[data-projectsx-track]');
+    if (!track) return;
+
+    let isDown = false;
+    let startX, startLeft;
+
+    track.addEventListener('pointerdown', (e) => {
+      isDown = true;
+      track.setPointerCapture(e.pointerId);
+      startX = e.clientX;
+      startLeft = track.scrollLeft;
+      track.style.cursor = 'grabbing';
+    });
+
+    track.addEventListener('pointermove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const dx = e.clientX - startX;
+      track.scrollLeft = startLeft - dx;
+    });
+
+    const endDrag = () => {
+      isDown = false;
+      track.style.cursor = 'grab';
+    };
+
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+
+    track.style.cursor = 'grab';
+  }
+
+  // ==================== PARTNERS MARQUEE ====================
+  function initPartnersMarquee() {
+    const track = document.querySelector('.partnersX__track');
+    if (!track) return;
+
+    let animationFrame;
+    let scrollPosition = 0;
+    let isPaused = false;
+
+    function marqueeScroll() {
+      if (isPaused) {
+        animationFrame = requestAnimationFrame(marqueeScroll);
+        return;
+      }
+
+      scrollPosition += 0.5;
+      track.style.transform = `translateX(-${scrollPosition}px)`;
+
+      const firstRow = track.querySelector('.partnersX__row');
+      if (firstRow && scrollPosition >= firstRow.offsetWidth) {
+        scrollPosition = 0;
+        track.appendChild(firstRow.cloneNode(true));
+        track.removeChild(firstRow);
+      }
+
+      animationFrame = requestAnimationFrame(marqueeScroll);
+    }
+
+    track.addEventListener('mouseenter', () => { isPaused = true; });
+    track.addEventListener('mouseleave', () => { isPaused = false; });
+
+    animationFrame = requestAnimationFrame(marqueeScroll);
+  }
+
+  // ==================== STATS COUNTER ====================
+  function initStatsCounter() {
+    const statsSection = document.getElementById('stats');
+    if (!statsSection) return;
+
+    const statElements = statsSection.querySelectorAll('[data-stat]');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          statElements.forEach(statEl => {
+            const value = parseFloat(statEl.dataset.value);
+            const suffix = statEl.dataset.suffix || '';
+            const valueEl = statEl.querySelector('.stat__value');
+            
+            if (valueEl && !statEl.classList.contains('counted')) {
+              statEl.classList.add('counted');
+              animateValue(valueEl, 0, value, 2000, suffix);
             }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+          });
+          observer.unobserve(entry.target);
         }
-        
-        .submit-button:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-        
-        .submit-button:disabled:hover {
-            transform: none;
-            box-shadow: none;
-        }
-    `;
-    document.head.appendChild(style);
+      });
+    }, { threshold: 0.3 });
+
+    observer.observe(statsSection);
+  }
+
+  function animateValue(element, start, end, duration, suffix) {
+    const range = end - start;
+    const increment = range / (duration / 16);
+    let current = start;
+    
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= end) {
+        current = end;
+        clearInterval(timer);
+      }
+      
+      if (Number.isInteger(end)) {
+        element.textContent = Math.round(current) + suffix;
+      } else {
+        element.textContent = current.toFixed(1) + suffix;
+      }
+    }, 16);
+  }
+
+  // ==================== INITIALIZE ALL ====================
+  function init() {
+    initAnimations();
+    initServicesCarousel();
+    initProjectsCarousel();
+    initPartnersMarquee();
+    initStatsCounter();
+    
+    console.log('MO Solar Energy animations initialized');
+  }
+
+  // Start everything when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+})();
+
+
+
+
+(function () {
+  const section = document.querySelector('.ps-core-services');
+  if (!section) return;
+
+  const revealItems = section.querySelectorAll('.ps-core-services__reveal');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reduceMotion) {
+    revealItems.forEach((item) => item.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.16,
+      rootMargin: '0px 0px -40px 0px'
+    }
+  );
+
+  revealItems.forEach((item) => observer.observe(item));
+})();
+
+
+
+
+(function () {
+  const section = document.querySelector('.ps-hardware-loop');
+  if (!section) return;
+
+  const track = section.querySelector('[data-track]');
+  const prevBtn = section.querySelector('.ps-hardware-loop__arrow--prev');
+  const nextBtn = section.querySelector('.ps-hardware-loop__arrow--next');
+  const tabs = Array.from(section.querySelectorAll('.ps-hardware-loop__tab'));
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const originalCards = Array.from(track.querySelectorAll('.ps-hardware-loop__card')).map((card) =>
+    card.cloneNode(true)
+  );
+
+  let currentFilter = 'solar';
+  let animationId = null;
+  let offset = 0;
+  let speed = 0.75; // continuous speed
+  let paused = false;
+
+  function getGap() {
+    const styles = window.getComputedStyle(track);
+    return parseFloat(styles.gap || styles.columnGap || 18);
+  }
+
+  function buildTrack(filter) {
+    track.innerHTML = '';
+
+    const filtered = originalCards.filter((card) => card.dataset.category === filter);
+
+    if (!filtered.length) return;
+
+    // duplicate enough for seamless continuous loop
+    const firstSet = filtered.map((card) => card.cloneNode(true));
+    const secondSet = filtered.map((card) => card.cloneNode(true));
+    const thirdSet = filtered.map((card) => card.cloneNode(true));
+
+    [...firstSet, ...secondSet, ...thirdSet].forEach((card) => track.appendChild(card));
+
+    offset = 0;
+    track.style.transform = 'translate3d(0,0,0)';
+  }
+
+  function getSetWidth() {
+    const cards = Array.from(track.querySelectorAll('.ps-hardware-loop__card'));
+    if (!cards.length) return 0;
+
+    const visiblePerSet = cards.length / 3;
+    const gap = getGap();
+
+    let width = 0;
+    for (let i = 0; i < visiblePerSet; i++) {
+      width += cards[i].getBoundingClientRect().width;
+      if (i < visiblePerSet - 1) width += gap;
+    }
+    return width;
+  }
+
+  function loop() {
+    if (!paused && !reduceMotion) {
+      offset += speed;
+      const setWidth = getSetWidth();
+
+      if (setWidth > 0 && offset >= setWidth) {
+        offset = 0;
+      }
+
+      track.style.transform = `translate3d(-${offset}px, 0, 0)`;
+    }
+
+    animationId = requestAnimationFrame(loop);
+  }
+
+  function startLoop() {
+    cancelAnimationFrame(animationId);
+    animationId = requestAnimationFrame(loop);
+  }
+
+  function stopLoop() {
+    cancelAnimationFrame(animationId);
+  }
+
+  function setActiveTab(filter) {
+    tabs.forEach((tab) => {
+      tab.classList.toggle('is-active', tab.dataset.filter === filter);
+    });
+  }
+
+  function applyFilter(filter) {
+    currentFilter = filter;
+    setActiveTab(filter);
+    buildTrack(filter);
+
+    if (!reduceMotion) {
+      startLoop();
+    }
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      applyFilter(tab.dataset.filter);
+    });
+  });
+
+  section.addEventListener('mouseenter', () => {
+    paused = true;
+  });
+
+  section.addEventListener('mouseleave', () => {
+    paused = false;
+  });
+
+  section.addEventListener('focusin', () => {
+    paused = true;
+  });
+
+  section.addEventListener('focusout', () => {
+    paused = false;
+  });
+
+  prevBtn?.addEventListener('click', () => {
+    offset = Math.max(0, offset - 180);
+    track.style.transform = `translate3d(-${offset}px, 0, 0)`;
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    offset += 180;
+    const setWidth = getSetWidth();
+    if (setWidth > 0 && offset >= setWidth) offset = 0;
+    track.style.transform = `translate3d(-${offset}px, 0, 0)`;
+  });
+
+  window.addEventListener('resize', () => {
+    buildTrack(currentFilter);
+  });
+
+  applyFilter(currentFilter);
+})();
+
+
+
+
+/* optional future JS */
+
+document.querySelectorAll('.ms-blog-card').forEach(card=>{
+card.addEventListener('mouseenter',()=>{
+card.style.boxShadow='0 20px 40px rgba(0,0,0,.08)';
+});
+card.addEventListener('mouseleave',()=>{
+card.style.boxShadow='';
+});
 });

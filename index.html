@@ -1,949 +1,473 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MO Solar Energy | Powering Tomorrow Sustainably</title>
-    
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="main.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="images/icon.png" type="image/x-icon">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MO Solar Energy</title>
+<!-- Google Font: Montserrat -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    <!-- Navigation -->
-    <nav class="nav-container">
-        <div class="nav-content">
-            <div class="nav-logo">
-                <a href="index.html" class="logo-main">
-                    <img src="images/mo sol.png" alt="MO Solar Energy">
-                </a>
-            </div>
-            
-            <div class="nav-menu-wrapper">
-                <div class="nav-menu">
-                    <a href="index.html" class="nav-link active">
-                        <span class="nav-text">Home</span>
-                        <span class="nav-highlight"></span>
-                    </a>
-                    
-                    <div class="nav-dropdown">
-                        <a href="#" class="nav-link">
-                            <span class="nav-text">Company</span>
-                            <span class="nav-highlight"></span>
-                            <span class="dropdown-arrow">⌄</span>
-                        </a>
-                        <div class="dropdown-content">
-                            <a href="about.html" class="dropdown-link">About Us</a>
-                            <a href="why choose us.html" class="dropdown-link">Why choose us</a>
-                            <a href="mission.html" class="dropdown-link">Mission & vision</a>
-                            <a href="strategy.html" class="dropdown-link">Services</a>
-                            <a href="globaldealers.html" class="dropdown-link">FAQs</a>
-                        </div>
-                    </div>
-                    
-                    <a href="blink.html" class="nav-link">
-                        <span class="nav-text">Energy Solutions</span>
-                        <span class="nav-highlight"></span>
-                    </a>
-                    
-                    <div class="nav-dropdown">
-                        <a href="#" class="nav-link">
-                            <span class="nav-text">Products</span>
-                            <span class="nav-highlight"></span>
-                            <span class="dropdown-arrow">⌄</span>
-                        </a>
-                        <div class="dropdown-content product-dropdown">
-                            <div class="product-category">
-                                <h4>Solar system</h4>
-                                <div class="product-sublinks">
-                                    <a href="#">Off-Grid</a>
-                                    <a href="#">On-Grid</a>
-                                    <a href="#">Energy Storage</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <a href="blog.html" class="nav-link">
-                        <span class="nav-text">Blogs</span>
-                        <span class="nav-highlight"></span>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="nav-actions">
-                <div class="contact-pill">
-                    <svg class="icon" viewBox="0 0 24 24">
-                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                    </svg>
-                    <a href="mailto:hello@mosolarenergy.com">hello@mosolarenergy.com</a>
-                </div>
-                <a href="contact-us.html" class="nav-button">Contact us</a>
-            </div>
-            
-            <button class="mobile-menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+  <!-- HEADER / HERO -->
+  <header class="hero" id="top">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="hero__overlay" aria-hidden="true"></div>
+
+    <nav class="nav container">
+      <a class="" href="#top" aria-label="MO Solar Energy home">
+        <img class="brand__mark" src="IMG_S/logo/M_SOLAR_LOGO.png" alt="MO Solar Energy Logo" />
+      </a>
+
+      <button class="nav__toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav__links" data-nav-links>
+        <a class="nav__link" href="#top">Home</a>
+        <a class="nav__link" href="#about">About Us</a>
+        <div class="nav__dropdown">
+          <button class="nav__link nav__link--btn" type="button" aria-haspopup="true" aria-expanded="false">
+            Energy Solutions <span class="chev">▾</span>
+          </button>
+          <div class="nav__menu" role="menu" aria-label="Energy Solutions menu">
+            <a href="#services" role="menuitem">Our Services</a>
+            <a href="#purpose" role="menuitem">Use Cases</a>
+            <a href="#faq" role="menuitem">FAQ</a>
+          </div>
         </div>
+        <a class="nav__link" href="#blog">Blog</a>
+
+      </div>
+      
+        <a class="btn btn--pill btn--primary nav__cta" href="#contact">
+          Contact Us<span class="arrow">📆︎</span>
+        </a>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-background">
-            <div class="hero-glow"></div>
-            <div class="hero-images"></div>
-        </div>
-        
-        <div class="hero-content">
-            <div class="hero-tag">
-                <span class="tag-text">☀️ Sustainable Energy</span>
-            </div>
-            
-            <h1 class="hero-title">
-                <span class="title-line">Switch to Solar Energy today,</span>
-                <span class="title-line highlight">a long term Investment</span>
-            </h1>
-            
-            <p class="hero-subtitle">
-                Enjoy 24/7 uninterrupted power supply.
-            </p>
-            
-            <div class="hero-actions">
-                <a href="#solutions" class="hero-button primary">
-                    <span>Explore Solutions</span>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M5 13h11.17l-4.88 4.88c-.39.39-.39 1.03 0 1.42.39.39 1.02.39 1.41 0l6.59-6.59c.39-.39.39-1.02 0-1.41l-6.58-6.6c-.39-.39-1.02-.39-1.41 0-.39.39-.39 1.02 0 1.41L16.17 11H5c-.55 0-1 .45-1 1s.45 1 1 1z"/>
-                    </svg>
-                </a>
-                <a href="contact-us.html" class="hero-button secondary">
-                    <span>Free Consultation</span>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                    </svg>
-                </a>
-            </div>
-            
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-value">24/7</div>
-                    <div class="stat-label">Power Supply</div>
-                </div>
-                <div class="stat-divider"></div>
-                <div class="stat-item">
-                    <div class="stat-value">5 Year</div>
-                    <div class="stat-label">Warranty</div>
-                </div>
-                <div class="stat-divider"></div>
-                <div class="stat-item">
-                    <div class="stat-value">10+ Year</div>
-                    <div class="stat-label">Service Life</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="hero-scroll">
-            <div class="scroll-indicator">
-                <span>Scroll</span>
-                <div class="scroll-line"></div>
-            </div>
-        </div>
-    </section>
+    <section class="hero__content container reveal">
+      <span class="pill pill--light">⚡Mo Solar Energy</span>
 
-    <!-- Services Showcase -->
-    <section class="services">
-        <div class="section-header">
-            <span class="section-tag">Our Services</span>
-            <h2 class="section-title">Our Services</h2>
-            <p class="section-description">
-                Comprehensive solar energy solutions tailored to your needs.
-            </p>
-        </div>
-        
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">
-                    <div class="icon-circle">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                        </svg>
-                    </div>
-                </div>
-                <h3 class="service-title">ASSESSMENTS</h3>
-                <p class="service-description">
-                    <b>MO SOLAR ENERGY LTD</b> provides complete solar energy solutions for households, businesses, and larger community projects. We offer a range of services that include:
-                </p>
-                <a href="strategy.html" class="service-link">
-                    <span>read more</span>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-                    </svg>
-                </a>
-            </div>
-            
-            <div class="service-card featured">
-                <div class="service-icon">
-                    <div class="icon-circle">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
-                        </svg>
-                    </div>
-                </div>
-                <h3 class="service-title">CONSULTATION AND DESIGN</h3>
-                <p class="service-description">
-                    One of our key objectives is to bring electricity to underserved and off-grid communities. We are working towards acquiring permits to set up <b>mini grids</b> that deliver stable, affordable energy to entire communities.
-                </p>
-                <a href="strategy.html" class="service-link">
-                    <span>read more</span>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-                    </svg>
-                </a>
-                <div class="featured-badge">Most Popular</div>
-            </div>
-            
-            <div class="service-card">
-                <div class="service-icon">
-                    <div class="icon-circle">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
-                        </svg>
-                    </div>
-                </div>
-                <h3 class="service-title">INSTALLATION</h3>
-                <p class="service-description">
-                    We extend our expertise beyond renewable energy by providing general contracting services, including the supply, marketing, and distribution of a variety of goods and services.
-                </p>
-                <a href="strategy.html" class="service-link">
-                    <span>read more</span>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/>
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </section>
+      <h1 class="hero__title">
+        Custom Energy Solutions for<br />
+        Households &amp; Businesses
+      </h1>
 
-    <!-- Energy Solutions -->
-    <section id="solutions" class="solutions">
-        <div class="section-header">
-            <span class="section-tag">Our Focus</span>
-            <h2 class="section-title">Energy Solution For</h2>
-            <p class="section-description">
-                Tailored solar solutions designed for different sectors and requirements.
-            </p>
-        </div>
-        
-        <div class="solutions-container">
-            <div class="solutions-main">
-                <div class="solution-card large">
-                    <div class="solution-image" style="background-image: url('images/t.jpg');"></div>
-                    <div class="solution-content">
-                        <h3 class="solution-title">RESIDENTIAL PURPOSE</h3>
-                        <p class="solution-description">
-                            Power your home with clean, renewable energy and reduce your electricity bills significantly.
-                        </p>
-                        <a href="blink.html" class="solution-button">
-                            <span>read more</span>
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="solutions-grid">
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/>
-                        </svg>
-                    </div>
-                    <h3 class="solution-title">COMMERCIAL PURPOSE</h3>
-                    <p class="solution-description">
-                        Reliable solar energy solutions for businesses to reduce operational costs.
-                    </p>
-                </div>
-                
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 10.5L5.5 9 12 5.5 18.5 9 12 13.5z"/>
-                        </svg>
-                    </div>
-                    <h3 class="solution-title">RURAL COMMUNITIES</h3>
-                    <p class="solution-description">
-                        Bringing sustainable energy to off-grid and underserved areas.
-                    </p>
-                </div>
-                
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14h-4v-4h4v4zm0-6h-4V7h4v4z"/>
-                        </svg>
-                    </div>
-                    <h3 class="solution-title">GOVERNMENT AGENCIES</h3>
-                    <p class="solution-description">
-                        Solar solutions for public institutions and government facilities.
-                    </p>
-                </div>
-                
-                <div class="solution-card">
-                    <div class="solution-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-                        </svg>
-                    </div>
-                    <h3 class="solution-title">INDUSTRIAL PURPOSE</h3>
-                    <p class="solution-description">
-                        Heavy-duty solar systems for manufacturing and industrial applications.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+      <p class="hero__subtitle">
+        Power your business affordably and reliably.<br />
+        24/7, 365 days a year.
+      </p>
 
-    <!-- Latest Projects -->
-    <section class="projects">
-        <div class="section-header">
-            <span class="section-tag">Our Work</span>
-            <h2 class="section-title">Latest Projects</h2>
-            <p class="section-description">
-                Explore our recent solar installations and success stories.
-            </p>
-        </div>
-        
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="image/LATEST PROJECTS PICTURES/i0.jpg" alt="Solar Installation">
-                </div>
-                <div class="project-overlay">
-                    <h3 class="project-title">Residential Installation</h3>
-                    <p class="project-description">Complete solar solution for modern homes</p>
-                </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="image/LATEST PROJECTS PICTURES/h7 (2).jpg" alt="Commercial Project">
-                </div>
-                <div class="project-overlay">
-                    <h3 class="project-title">Commercial Setup</h3>
-                    <p class="project-description">Large-scale solar system for business</p>
-                </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="image/LATEST PROJECTS PICTURES/002.jpg" alt="Industrial Installation">
-                </div>
-                <div class="project-overlay">
-                    <h3 class="project-title">Industrial Power</h3>
-                    <p class="project-description">Heavy-duty solar for manufacturing</p>
-                </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="image/LATEST PROJECTS PICTURES/006.jpg" alt="Community Project">
-                </div>
-                <div class="project-overlay">
-                    <h3 class="project-title">Community Grid</h3>
-                    <p class="project-description">Solar solution for rural community</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="projects-cta">
-            <a href="img view.html" class="cta-button">
-                <span>View All</span>
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
-                </svg>
-            </a>
-        </div>
-    </section>
-
-    <!-- Blogs Section -->
-    <section class="blogs-section">
-        <div class="section-header">
-            <span class="section-tag">Insights</span>
-            <h2 class="section-title">Blogs</h2>
-            <p class="section-description">
-                Latest updates and insights from the solar energy industry.
-            </p>
-        </div>
-        
-        <div class="blogs-grid">
-            <article class="blog-card">
-                <a href="blog.html">
-                    <img src="image/e7.jpg" alt="Blog Post">
-                </a>
-            </article>
-            
-            <article class="blog-card">
-                <a href="blog.html">
-                    <img src="image/i02.jpg" alt="Blog Post">
-                </a>
-            </article>
-            
-            <article class="blog-card">
-                <a href="blog.html">
-                    <img src="image/k8.jpg" alt="Blog Post">
-                </a>
-            </article>
-            
-            <article class="blog-card">
-                <a href="blog.html">
-                    <img src="image/i4.jpg" alt="Blog Post">
-                </a>
-            </article>
-            
-            <article class="blog-card">
-                <a href="blog.html">
-                    <img src="image/i3.jpg" alt="Blog Post">
-                </a>
-            </article>
-        </div>
-    </section>
-
-    <!-- Statistics Section -->
-    <section class="statistics">
-        <div class="statistics-background">
-            <div class="stats-glow"></div>
-        </div>
-        
-        <div class="section-header">
-            <span class="section-tag">Our Impact</span>
-            <h2 class="section-title">Our Journey So Far...</h2>
-            <p class="section-description">
-                Join us in creating a cleaner, greener future through solar energy.
-            </p>
-        </div>
-        
-        <div class="stats-container">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number" data-target="4.5" data-suffix=" GWh+">0.1</div>
-                    <div class="stat-label">Green Energy Generated</div>
-                    <div class="stat-progress">
-                        <div class="progress-bar" style="width: 0%"></div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-number" data-target="6.5" data-suffix=" MWp+">0.1</div>
-                    <div class="stat-label">Installed Solar PV capacity</div>
-                    <div class="stat-progress">
-                        <div class="progress-bar" style="width: 0%"></div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-number" data-target="17.8" data-suffix=" MWh+">0.1</div>
-                    <div class="stat-label">Active Storage System (BESS)</div>
-                    <div class="stat-progress">
-                        <div class="progress-bar" style="width: 0%"></div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-number" data-target="7163" data-suffix=" MT+">0.1</div>
-                    <div class="stat-label">Displaced CO2e Equivalent</div>
-                    <div class="stat-progress">
-                        <div class="progress-bar" style="width: 0%"></div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-number" data-target="135" data-suffix="k+">0.1k</div>
-                    <div class="stat-label">Sequestered Carbon Equivalent (Tree Seedlings Grown)</div>
-                    <div class="stat-progress">
-                        <div class="progress-bar" style="width: 0%"></div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-number" data-target="1.6" data-suffix=" million">0.1</div>
-                    <div class="stat-label">Avoided Diesel Equivalent (Litres)</div>
-                    <div class="stat-progress">
-                        <div class="progress-bar" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Clients Section -->
-    <section class="clients-section">
-        <div class="section-header">
-            <span class="section-tag">Partnerships</span>
-            <h2 class="section-title">Our Clients and partners</h2>
-            <p class="section-description">
-                Trusted by leading organizations and communities.
-            </p>
-        </div>
-        
-        <div class="clients-slider">
-            <div class="client-logos">
-                <div class="client-logo"><img src="image/bluesun logo.png" alt="Bluesun"></div>
-                <div class="client-logo"><img src="image/dawnice-logo-300x63.webp" alt="Dawnice"></div>
-                <div class="client-logo"><img src="image/Gateway Brand New-01.png" alt="Gateway"></div>
-                <div class="client-logo"><img src="image/mo soleng.png" alt="MO Solar"></div>
-                <div class="client-logo"><img src="image/bluesun logo.png" alt="Bluesun"></div>
-                <div class="client-logo"><img src="image/dawnice-logo-300x63.webp" alt="Dawnice"></div>
-                <div class="client-logo"><img src="image/Gateway Brand New-01.png" alt="Gateway"></div>
-                <div class="client-logo"><img src="image/mo soleng.png" alt="MO Solar"></div>
-            </div>
-        </div>
-        
-        <div class="projects-cta">
-            <a href="#" class="cta-button">
-                <span>View All</span>
-                <svg viewBox="0 0 24 24">
-                    <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
-                </svg>
-            </a>
-        </div>
-    </section>
-
-    <!-- Benefits Section -->
-    <section class="benefits">
-        <div class="benefits-container">
-            <div class="benefits-content">
-                <div class="section-header">
-                    <span class="section-tag">Why Choose Us</span>
-                    <h2 class="section-title">What MO Solar Energy will offer you</h2>
-                    <p class="section-description">
-                        We deliver exceptional value through superior products and service.
-                    </p>
-                </div>
-                
-                <div class="benefits-list">
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <h3>24/7 uninterrupted power supply.</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <h3>Clean, stable, and noiseless electricity.</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <h3>Five (5) years of warranty.</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <h3>Over ten (10) years service life.</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <h3>Smooth installation and maintenance.</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="benefits-visual">
-                <div class="visual-container">
-                    <div class="visual-card">
-                        <div class="visual-image">
-                            <img src="image/j6.jpg" alt="Solar System">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="benefits-content">
-                <div class="benefits-list">
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <h3>Lasting lithium (LiFePO₄) batteries.</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <h3>Flexible funding options.</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <h3>Modular and scalable system units.</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <h3>Active after-sales Support.</h3>
-                        </div>
-                    </div>
-                    
-                    <div class="benefit-item">
-                        <div class="benefit-icon">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                            </svg>
-                        </div>
-                        <div class="benefit-text">
-                            <h3>Online remote energy management.</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Consultation CTA -->
-    <section class="consultation">
-        <div class="consultation-container">
-            <div class="consultation-content">
-                <h2 class="consultation-title">Questions? Speak To Our Experts</h2>
-                <p class="consultation-description">
-                    Our Renewable Energy Experts are always available to speak with you and
-                    share valuable insights and details regarding your requests, as well as
-                    guide you towards finding the right solar solutions that meet your energy
-                    needs and align with your budget.
-                </p>
-                
-                <div class="consultation-features">
-                    <div class="feature">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <span>Free Energy Assessment</span>
-                    </div>
-                    <div class="feature">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <span>Custom Design</span>
-                    </div>
-                    <div class="feature">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <span>Cost Analysis</span>
-                    </div>
-                </div>
-                
-                <button class="consultation-trigger">
-                    <span>Get FREE Consultation →</span>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-                    </svg>
-                </button>
-            </div>
-            
-            <div class="consultation-visual">
-                <div class="visual-element">
-                    <img src="image/cll.webp" alt="Consultation Expert">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-main">
-            <div class="footer-brand">
-                <a href="index.html" class="footer-logo">
-                    <img src="images/mo solar e.png" alt="MO Solar Energy">
-                </a>
-                <p class="brand-mission">
-                    MO SOLAR can customize your own complete solar power system solution kit based on your requests. We provide grid-tied, off-grid and hybrid with PV system solutions.
-                </p>
-                
-                <div class="footer-social">
-                    <a href="https://wa.me/message/34J5X23R27VAD1" class="social-link">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M16.75 13.96c.25.13.41.2.46.3.06.11.04.61-.21 1.18-.2.56-1.24 1.1-1.7 1.12-.46.02-.47.36-2.96-.73-2.49-1.09-3.99-3.75-4.11-3.92-.12-.17-.96-1.38-.92-2.61.05-1.22.69-1.8.95-2.04.24-.26.51-.29.68-.26h.47c.15 0 .36-.06.55.45l.69 1.87c.06.13.1.28.01.44l-.27.41-.39.42c-.12.12-.26.25-.12.5.12.26.62 1.09 1.32 1.78.91.88 1.71 1.17 1.95 1.3.24.14.39.12.54-.04l.81-.94c.19-.25.35-.19.58-.11l1.67.88M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-1.97 0-3.8-.57-5.35-1.55L2 22l1.55-4.65A9.969 9.969 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8c0 1.72.54 3.31 1.46 4.61L4.5 19.5l2.89-.96A7.95 7.95 0 0 0 12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8z"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=61567490393568" class="social-link">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7H7.9v-2.9h2.54V9.85c0-2.51 1.49-3.89 3.78-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z"/>
-                        </svg>
-                    </a>
-                    <a href="https://www.instagram.com/mosolarenergy?igsh=MTBneWp2Ym5mdjJrZw==" class="social-link">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/>
-                        </svg>
-                    </a>
-                    <a href="https://x.com/Mosolarenergy?t=v_aD6hl6Bigvcut18VuA0A&s=08" class="social-link">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="footer-links">
-                <div class="link-group">
-                    <h3 class="link-title">Need Help</h3>
-                    <a href="contact-us.html" class="link-item">Contact us</a>
-                    <a href="#" class="link-item">News</a>
-                    <a href="blog.html" class="link-item">Blog</a>
-                    <a href="#" class="link-item">Feedback</a>
-                    <a href="#" class="link-item">Private policy</a>
-                </div>
-                
-                <div class="link-group">
-                    <h3 class="link-title">Quick Links</h3>
-                    <a href="about.html" class="link-item">About Us</a>
-                    <a href="why choose us.html" class="link-item">Why choose us</a>
-                    <a href="mission.html" class="link-item">Mission & vision</a>
-                    <a href="strategy.html" class="link-item">Services</a>
-                    <a href="globaldealers.html" class="link-item">FAQs</a>
-                </div>
-            </div>
-            
-            <div class="footer-contact">
-                <h3 class="contact-title">Get In Touch</h3>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                        <div>
-                            <p>Suite 203A, Bahamas Plaza</p>
-                            <p>Plot 1080, Joseph Gowalk Street</p>
-                            <p>Gudu District, Abuja.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                        </svg>
-                        <div>
-                            <p>Phone: +2349050307173</p>
-                            <p>Phone: +2349050307173</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                        </svg>
-                        <p>Email: <a href="mailto:hello@mosolarenergy.com">hello@mosolarenergy.com</a></p>
-                    </div>
-                </div>
-                
-                <div class="subscribe-form">
-                    <p>Please read on, stay posted, Subscribe, and we welcome you to tell us what you think</p>
-                    <div class="input-group">
-                        <input type="email" placeholder="Email Address">
-                        <button type="button">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p class="copyright">Copyright &copy; 2024 MO Solar Energy All Rights Reserved.</p>
-            <div class="footer-extra">
-                <p>Powering a Sustainable Future</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Consultation Modal -->
-    <div class="modal" id="consultationModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Kindly share your inquiry with us and our team will provide the appropriate clarifications</h2>
-                <button class="modal-close">×</button>
-            </div>
-            
-            <form class="modal-form">
-                <div class="form-group">
-                    <label>What do you want to know?</label>
-                    <textarea placeholder="Describe your inquiry..." rows="3" required></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label>How should we respond to your request?</label>
-                    <select required>
-                        <option value="">Please call me and let's discuss this.</option>
-                        <option value="Email">Email</option>
-                        <option value="Phone">Phone</option>
-                        <option value="WhatsApp">WhatsApp</option>
-                    </select>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>When can we contact you?</label>
-                        <input type="date" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>What time?</label>
-                        <select required>
-                            <option value="">Select Time</option>
-                            <option value="1 PM">1 pm</option>
-                            <option value="2 PM">2 pm</option>
-                            <option value="3 PM">3 pm</option>
-                            <option value="4 PM">4 pm</option>
-                            <option value="5 PM">5 pm</option>
-                            <option value="6 PM">6 pm</option>
-                            <option value="7 PM">7 pm</option>
-                            <option value="8 AM">8 AM</option>
-                            <option value="9 AM">9 AM</option>
-                            <option value="10 AM">10 AM</option>
-                            <option value="11 AM">11 AM</option>
-                            <option value="12 PM">12 PM</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" placeholder="Name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Phone number</label>
-                        <input type="tel" placeholder="" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" placeholder="" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Location (City)</label>
-                        <input type="text" placeholder="City" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>How did you find us?</label>
-                    <select required>
-                        <option value="Google Search">Google Search</option>
-                        <option value="Social Media">Gmail</option>
-                        <option value="Social Media">Facebook</option>
-                        <option value="Social Media">Twitter</option>
-                        <option value="Social Media">Instagram</option>
-                        <option value="Social Media">Display Advert</option>
-                        <option value="Social Media">Youtube</option>
-                        <option value="Social Media">WhatsApp</option>
-                        <option value="Social Media">Social Media</option>
-                        <option value="Friend/Referral">Friend/Referral</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <div class="g-recaptcha" data-sitekey="6LcLsncqAAAAAMrqu4Sh7i1EW1jd4ZncBtiRN4QO"></div>
-                </div>
-                
-                <button type="submit" class="form-submit">
-                    <span>Send Message</span>
-                    <svg viewBox="0 0 24 24">
-                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                    </svg>
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Floating Elements -->
-    <div class="float-actions">
-        <a href="https://wa.me/message/34J5X23R27VAD1" class="float-button whatsapp" title="Chat on WhatsApp">
-            <svg viewBox="0 0 24 24">
-                <path d="M16.75 13.96c.25.13.41.2.46.3.06.11.04.61-.21 1.18-.2.56-1.24 1.1-1.7 1.12-.46.02-.47.36-2.96-.73-2.49-1.09-3.99-3.75-4.11-3.92-.12-.17-.96-1.38-.92-2.61.05-1.22.69-1.8.95-2.04.24-.26.51-.29.68-.26h.47c.15 0 .36-.06.55.45l.69 1.87c.06.13.1.28.01.44l-.27.41-.39.42c-.12.12-.26.25-.12.5.12.26.62 1.09 1.32 1.78.91.88 1.71 1.17 1.95 1.3.24.14.39.12.54-.04l.81-.94c.19-.25.35-.19.58-.11l1.67.88M12 2a10 10 0 0 1 10 10 10 10 0 0 1-10 10c-1.97 0-3.8-.57-5.35-1.55L2 22l1.55-4.65A9.969 9.969 0 0 1 2 12 10 10 0 0 1 12 2m0 2a8 8 0 0 0-8 8c0 1.72.54 3.31 1.46 4.61L4.5 19.5l2.89-.96A7.95 7.95 0 0 0 12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8z"/>
-            </svg>
+      <div class="hero__actions">
+        <a class="btn btn--pill btn--ghost" href="#services">
+          View Energy Solutions <span class="arrow">→</span>
         </a>
-        
-        <button class="float-button contact" title="Contact Info">
-            <svg viewBox="0 0 24 24">
-                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-            </svg>
-        </button>
-        
-        <button class="float-button top" title="Back to Top">
-            <svg viewBox="0 0 24 24">
-                <path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/>
-            </svg>
-        </button>
+        <a class="btn btn--pill btn--primary" href="#services">
+          View Energy Solutions <span class="arrow">📆︎</span>
+        </a>
+      </div>
+    </section>
+  </header>
+
+
+  <!-- WHY SECTION -->
+  <section class="band band--soft" id="about">
+    <div class="container reveal">
+      
+  <!-- Why Solar Energy pill moved here -->
+  <div class="">
+    <span class="pill pill--dark pill--center">⚡ Why Solar Energy</span>
+  </div>
+      <div class="two-col">
+        <div class="two-col__left">
+          <h2 class="h2">
+            Why Your Business Cannot<br />
+            Afford Power Outages
+          </h2>
+          <p class="p">
+            Power outages cost businesses thousands every month. Refrigerators fail, servers go down, and customers satisfactions drop and generators? Are noisy, expensive, and unreliable.
+          </p>
+        </div>
+
+        <div class="two-col__right">
+          <p class="p p--muted">
+            MO Solar Energy delivers affordable, reliable, and scalable solar system tailored to your business. With our solution you reduce costs, stay powered, and ensure your operation never stop - no matter what.
+          </p>
+
+          <a class="btn btn--pill btn--primary" href="#services">
+            View Energy Solutions <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="wide-image">
+        <!-- Replace with the actual section image -->
+        <img src="IMG_S/Images/why_choose.png" alt="Power lines at sunset" />
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section" id="features">
+    <div class="container reveal">
+      <span class="pill pill--dark pill--center">• benefits</span>
+      <h2 class="h2 h2--center">Reliable, Scalable, and Cost-Saving Solar Energy</h2>
+
+      <div class="feature-grid" data-stagger>
+        <article class="feature-card" data-stagger-item>
+          <div class="feature-card__icon">
+            <img src="IMG_S/Images/Icons/cut_energy.png" alt="" />
+          </div>
+          <h3>Cut Energy Costs</h3>
+          <p>Reduce monthly electricity bills and cut OPEX.</p>
+        </article>
+
+        <article class="feature-card" data-stagger-item>
+          <div class="feature-card__icon">
+            <img src="IMG_S/Images/Icons/stay powered.png" alt="" />
+          </div>
+          <h3>Stay Powered 24/7</h3>
+          <p>Uninterrupted electricity for your operations.</p>
+        </article>
+
+        <article class="feature-card" data-stagger-item>
+          <div class="feature-card__icon">
+            <img src="IMG_S/Images/Icons/scalable_sol.png" alt="" />
+          </div>
+          <h3>Scalable Solutions</h3>
+          <p>Modular systems grow with your business.</p>
+        </article>
+
+        <article class="feature-card" data-stagger-item>
+          <div class="feature-card__icon">
+            <img src="IMG_S/Images/Icons/sus_energy.png" alt="" />
+          </div>
+          <h3>Sustainable Energy</h3>
+          <p>For cleaner power and greener business impact.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="services">
+    <div class="container reveal">
+      <span class="pill pill--dark pill--center">• our services</span>
+      <h2 class="h2 h2--center">Our End-to-End Solar Services</h2>
+
+      <div class="service-grid" data-stagger>
+        <article class="service-card" data-stagger-item>
+          <div class="service-card__img">
+            <img src="IMG_S/Images/assessment.png" alt="Assessment" />
+          </div>
+          <h3>Assessment</h3>
+          <p>The evaluation of your energy needs and business setup.</p>
+        </article>
+
+        <article class="service-card" data-stagger-item>
+          <div class="service-card__img">
+            <img src="IMG_S/Images/consult_design.png" alt="Consultation & Design" />
+          </div>
+          <h3>Consultation &amp; Design</h3>
+          <p>Tailored systems to match your energy demands and budget.</p>
+        </article>
+
+        <article class="service-card" data-stagger-item>
+          <div class="service-card__img">
+            <img src="IMG_S/Images/install_main.png" alt="Installation & Maintenance" />
+          </div>
+          <h3>Installation &amp; Maintenance</h3>
+          <p>Expert installation and ongoing support for guaranteed reliability.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="band band--soft" id="stats">
+    <div class="container reveal">
+      <span class="pill pill--dark pill--center">• our impact</span>
+
+      <div class="stats">
+        <div class="stats__intro">
+          <h2 class="h2">Our Journey So Far...</h2>
+          <p class="p p--muted">Making clean, reliable power accessible for homes and growing businesses.</p>
+        </div>
+
+        <div class="stats__grid">
+          <div class="" data-stat data-value="4.5" data-suffix="GWh+">
+            <div class="stat__value">0 GWh+</div>
+            <div class="stat__label">Clean Energy Generated</div>
+          </div>
+          <div class="" data-stat data-value="6.5" data-suffix="MWp+">
+            <div class="stat__value">0 MWp+</div>
+            <div class="stat__label">Installed Solar PV Capacity</div>
+          </div>
+          <div class="" data-stat data-value="17.8" data-suffix="MWh+">
+            <div class="stat__value">0 MWh+</div>
+            <div class="stat__label">Battery Storage Systems</div>
+          </div>
+          <div class="" data-stat data-value="7163.0" data-suffix="MT+">
+            <div class="stat__value">0 MT+</div>
+            <div class="stat__label">Emissions Avoided</div>
+          </div>
+          <div class="" data-stat data-value="135.0" data-suffix="k+">
+            <div class="stat__value">0 k+</div>
+            <div class="stat__label">Equivalent Trees Planted (est.)</div>
+          </div>
+          <div class="" data-stat data-value="1.6" data-suffix=" million">
+            <div class="stat__value">0 million</div>
+            <div class="stat__label">Avoided Diesel &amp; Fuel (est.)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section" id="testimonials">
+    <div class="container reveal">
+      <h2 class="h2 h2--center">Trusted Across Homes, Businesses, and Communities</h2>
+
+      <div class="test-grid" data-stagger>
+        <article class="quote-card" data-stagger-item>
+          <div class="quote-card__mark">❝</div>
+          <p>
+            MO Solar energized the entire construction site flawlessly. Everything was clean and professional.
+            Now our operations run smoothly without power interruptions.
+          </p>
+          <div class="quote-card__who">
+            <img src="assets/avatar-1.jpg" alt="" />
+            <div>
+              <div class="who__name">Aisha Mohammed</div>
+              <div class="who__role">Homeowner</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="quote-card" data-stagger-item>
+          <div class="quote-card__mark">❝</div>
+          <p>
+            Reliable power has changed how we operate. Installation was quick and the team was very helpful.
+            Highly recommended for businesses.
+          </p>
+          <div class="quote-card__who">
+            <img src="assets/avatar-2.jpg" alt="" />
+            <div>
+              <div class="who__name">Aisha Mohammed</div>
+              <div class="who__role">Business Owner</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="quote-card" data-stagger-item>
+          <div class="quote-card__mark">❝</div>
+          <p>
+            Great experience from consultation to installation. Support is responsive and the system performs
+            exactly as promised.
+          </p>
+          <div class="quote-card__who">
+            <img src="assets/avatar-3.jpg" alt="" />
+            <div>
+              <div class="who__name">Aisha Mohammed</div>
+              <div class="who__role">Community Lead</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PURPOSE / USE CASES -->
+  <section class="band band--soft" id="purpose">
+    <div class="container reveal">
+      <div class="purpose">
+        <div class="purpose__left" data-stagger>
+          <article class="purpose-card" data-stagger-item>
+            <div class="purpose-card__icon"><img src="IMG_S/Images/Icons/res_purpose.png" alt=""></div>
+            <h3>Residential Purpose</h3>
+            <p>For homes that want clean, reliable, and affordable energy.</p>
+          </article>
+
+          <article class="purpose-card" data-stagger-item>
+            <div class="purpose-card__icon"><img src="IMG_S/Images/Icons/commercial_pur.png" alt=""></div>
+            <h3>Commercial Purpose</h3>
+            <p>Uninterrupted power for business operations and growth.</p>
+          </article>
+
+          <article class="purpose-card purpose-card--small" data-stagger-item>
+            <div class="purpose-card__icon"><img src="IMG_S/Images/Icons/government_agencies.png" alt=""></div>
+            <h3>Government Agencies</h3>
+            <p>Stable energy for public infrastructure and essential services.</p>
+          </article>
+
+          <article class="purpose-card purpose-card--small" data-stagger-item>
+            <div class="purpose-card__icon"><img src="IMG_S/Images/Icons/indus_purpose.png" alt=""></div>
+            <h3>Industrial Purpose</h3>
+            <p>High-capacity power solutions for factories and industrial energy.</p>
+          </article>
+
+          <article class="purpose-card" data-stagger-item>
+            <div class="purpose-card__icon"><img src="IMG_S/Images/Icons/rural_community.png" alt=""></div>
+            <h3>Rural Communities</h3>
+            <p>Off-grid solutions bringing electricity to underserved locations.</p>
+          </article>
+        </div>
+
+        <div class="purpose__right">
+          <span class="pill pill--dark;" style="margin-bottom: 38px;">• who we serve</span>
+          <h2 class="h2">Built for Those Who Depend<br/>on Reliable Power</h2>
+          <p class="p p--muted">
+            Our solar solutions are designed for people who cannot afford downtime.
+            Clean energy that scales with your needs — from homes to large commercial and industrial systems.
+          </p>
+          <a class="btn btn--pill btn--primary" href="#services">See Our Services <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ / CONTACT -->
+  <section class="section" id="faq">
+    <div class="container reveal">
+      <span class="pill pill--dark pill--center">• FAQ</span>
+
+      <div class="faq">
+        <div class="faq__media">
+          <img src="assets/faq.jpg" alt="Person speaking on a phone" />
+        </div>
+
+        <div class="faq__content">
+          <h2 class="h2">Questions? Speak To Our Experts</h2>
+          <p class="p p--muted">Get clear guidance and a tailored plan that fits your energy needs and budget.</p>
+
+          <a class="btn btn--pill btn--primary" href="#contact">Get FREE Consultation <span class="arrow">→</span></a>
+
+          <div class="accordion" data-accordion>
+            <button class="acc__item is-open" type="button" aria-expanded="true">
+              <span>What is solar energy and how does it work?</span>
+              <span class="acc__chev">▾</span>
+            </button>
+            <div class="acc__panel">
+              Solar energy captures sunlight using photovoltaic (PV) panels and converts it into electricity. The electricity can be used directly,
+              stored in batteries, or fed into a backup system depending on your setup.
+            </div>
+
+            <button class="acc__item" type="button" aria-expanded="false">
+              <span>Who can use your solar systems?</span>
+              <span class="acc__chev">▾</span>
+            </button>
+            <div class="acc__panel">
+              Homes, offices, businesses, institutions, and industrial facilities — we design systems based on your load and goals.
+            </div>
+
+            <button class="acc__item" type="button" aria-expanded="false">
+              <span>What are the benefits of switching to solar energy?</span>
+              <span class="acc__chev">▾</span>
+            </button>
+            <div class="acc__panel">
+              Lower electricity costs, reliable power, reduced dependence on generators, and a cleaner footprint.
+            </div>
+
+            <button class="acc__item" type="button" aria-expanded="false">
+              <span>How long does a solar installation take?</span>
+              <span class="acc__chev">▾</span>
+            </button>
+            <div class="acc__panel">
+              Typical residential installs take a few days; commercial projects vary by size and complexity.
+            </div>
+
+            <button class="acc__item" type="button" aria-expanded="false">
+              <span>Do you offer maintenance and ongoing support?</span>
+              <span class="acc__chev">▾</span>
+            </button>
+            <div class="acc__panel">
+              Yes — we provide maintenance plans and ongoing support to keep systems running at peak performance.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  
+  <!-- CTA SECTION: Ready to Start your Solar Journey? -->
+<section class="cta-band" aria-labelledby="cta-title">
+  <div class="cta-band__inner">
+    <h2 class="cta-band__title" id="cta-title">Ready to Start your Solar Journey?</h2>
+    <p class="cta-band__subtitle">
+      Join the numbers of happy homeowners and businesses who have switched to clean<br />
+      and reliable energy with Mo Solar
+    </p>
+
+    <div class="cta-band__actions">
+      <a class="cta-btn cta-btn--ghost" href="#services">
+        <span>View Energy Solutions</span>
+        <span class="cta-btn__icon" aria-hidden="true">→</span>
+      </a>
+
+      <a class="cta-btn cta-btn--solid" href="#contact">
+        <span>Book a Free Consultation</span>
+        <span class="cta-btn__icon cta-btn__icon--square" aria-hidden="true">
+          <!-- calendar icon -->
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+            <path d="M7 3v2M17 3v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M4.5 8.5h15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M6.5 5h11A2.5 2.5 0 0 1 20 7.5v11A2.5 2.5 0 0 1 17.5 21h-11A2.5 2.5 0 0 1 4 18.5v-11A2.5 2.5 0 0 1 6.5 5Z"
+                  stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- FOOTER -->
+  <footer class="footer" id="contact">
+    <div class="container footer__row">
+      <div class="footer__brand">
+        <div class="footer__logo">
+          <img src="IMG_S/logo/M_SOLAR_LOGO.png" alt="MO Solar Energy Logo" />
+        </div>
+      </div>
+
+      <div class="footer__links">
+        <a href="#top">Home</a>
+        <a href="#about">About_us</a>
+        <a href="#services">Energy_Solutions</a>
+        <a href="#blog">Blog</a>
+      </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src="main.js"></script>
+    <div class="container footer__bottom">
+      <small>Copyright © 2026 MO Solar Energy. All Rights Reserved</small>
+      <div class="footer__social footer__social--icons">
+         <a href="https://wa.me/234XXXXXXXXXX" aria-label="WhatsApp" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.93.54 3.81 1.57 5.44L2 22l4.79-1.58a9.86 9.86 0 0 0 5.25 1.5h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.77 14.06c-.24.67-1.18 1.22-1.91 1.37-.5.1-1.15.18-3.74-.8-3.32-1.28-5.45-4.69-5.62-4.9-.17-.22-1.35-1.8-1.35-3.43 0-1.63.85-2.43 1.15-2.76.3-.33.66-.41.88-.41.22 0 .44 0 .63.01.2.01.47-.08.73.56.24.67.83 2.31.9 2.47.07.17.12.37.02.59-.1.22-.15.37-.3.56-.15.19-.31.42-.44.56-.15.15-.3.31-.13.61.17.3.76 1.25 1.64 2.02 1.12.99 2.06 1.3 2.36 1.45.3.15.47.13.64-.08.17-.22.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.73.81 2.02.96.29.15.49.22.56.35.07.13.07.74-.17 1.41Z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm0 2A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9A3.5 3.5 0 0 0 20 16.5v-9A3.5 3.5 0 0 0 16.5 4h-9Zm10.75 1.5a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>
+        </a>
+        <a href="#" aria-label="Facebook" target="_blank" rel="noopener">
+           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 22v-8h2.7l.4-3H13.5V9.1c0-.87.24-1.46 1.49-1.46H16.7V5c-.3-.04-1.34-.13-2.55-.13-2.52 0-4.25 1.54-4.25 4.37V11H7.3v3h2.6v8h3.6Z"/></svg>
+        </a>
+        <a href="#" aria-label="YouTube" target="_blank" rel="noopener">
+           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.8 4.5 12 4.5 12 4.5s-5.8 0-7.5.6A3 3 0 0 0 2.4 7.2 31.4 31.4 0 0 0 2 12a31.4 31.4 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.7.6 7.5.6 7.5.6s5.8 0 7.5-.6a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 22 12a31.4 31.4 0 0 0-.4-4.8ZM10 15.5v-7l6 3.5-6 3.5Z"/></svg>
+         </a>
+         <a href="#" aria-label="Twitter" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22h-6.4l-5-6.5L6 22H2.9l7.3-8.4L.8 2h6.6l4.5 5.9L18.9 2Zm-1.1 18h1.7L8.1 3.9H6.3L17.8 20Z"/></svg>
+          </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
 </body>
 </html>
