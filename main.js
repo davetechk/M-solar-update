@@ -1,20 +1,56 @@
 // Mobile nav toggle
-const toggle = document.querySelector('.nav__toggle');
-const links = document.querySelector('[data-nav-links]');
+const navToggle = document.querySelector('.nav__toggle');
+const navLinks = document.querySelector('.nav__links');
+const dropBtn = document.querySelector('.nav__link--btn');
+const dropWrap = document.querySelector('.nav__dropdown');
 
-if (toggle && links) {
-  toggle.addEventListener('click', () => {
-    const open = links.classList.toggle('is-open');
-    toggle.setAttribute('aria-expanded', String(open));
-  });
+if(navToggle){
 
-  // Close menu when clicking a link (mobile)
-  links.addEventListener('click', (e) => {
-    const a = e.target.closest('a');
-    if (!a) return;
-    links.classList.remove('is-open');
-    toggle.setAttribute('aria-expanded', 'false');
-  });
+navToggle.addEventListener('click',()=>{
+
+navToggle.classList.toggle('active');
+navLinks.classList.toggle('is-open');
+
+});
+
+/* dropdown mobile */
+if(dropBtn){
+
+dropBtn.addEventListener('click',(e)=>{
+
+if(window.innerWidth <= 820){
+e.preventDefault();
+dropWrap.classList.toggle('open');
+}
+
+});
+
+}
+
+/* close menu when link clicked */
+document.querySelectorAll('.nav__links a').forEach(link=>{
+
+link.addEventListener('click',()=>{
+
+navToggle.classList.remove('active');
+navLinks.classList.remove('is-open');
+dropWrap.classList.remove('open');
+
+});
+
+});
+
+/* close outside */
+document.addEventListener('click',(e)=>{
+
+if(!e.target.closest('.nav')){
+navToggle.classList.remove('active');
+navLinks.classList.remove('is-open');
+dropWrap.classList.remove('open');
+}
+
+});
+
 }
 
 // Improved Accordion with smooth animation
@@ -220,6 +256,41 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 
 
+
+// =========== HOW IT WORKS ANIMATION ==========
+(function initHowItWorks() {
+  const hiwSteps = document.querySelector('.hiw__steps');
+  if (!hiwSteps) return;
+
+  const steps = Array.from(hiwSteps.querySelectorAll('.hiw__step'));
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reduced) {
+    hiwSteps.classList.add('hiw--animate');
+    steps.forEach(s => s.classList.add('hiw--visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+
+      // draw the connecting line first
+      hiwSteps.classList.add('hiw--animate');
+
+      // stagger each step: 01 → 02 → 03 → 04
+      steps.forEach((step, i) => {
+        setTimeout(() => {
+          step.classList.add('hiw--visible');
+        }, i * 280);
+      });
+
+      observer.disconnect();
+    });
+  }, { threshold: 0.25 });
+
+  observer.observe(hiwSteps);
+})();
 
 // =========== ABOUT US JS ==========
 
@@ -1243,4 +1314,69 @@ card.style.boxShadow='0 20px 40px rgba(0,0,0,.08)';
 card.addEventListener('mouseleave',()=>{
 card.style.boxShadow='';
 });
+});
+
+
+
+
+
+/* ========================================= */
+/* CONTACT PAGE JS */
+/* Paste into script.js */
+/* ========================================= */
+
+/* reveal animation */
+const revealItems = document.querySelectorAll('.reveal-up');
+
+const revealObserver = new IntersectionObserver((entries)=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add('show');
+}
+});
+},{threshold:.15});
+
+revealItems.forEach(item=>revealObserver.observe(item));
+
+
+/* faq accordion + image auto stretch */
+const faqItems = document.querySelectorAll('.ms-faq-item');
+const faqImageWrap = document.querySelector('.ms-faq-image-wrap');
+
+faqItems.forEach(item=>{
+
+item.querySelector('.ms-faq-question').addEventListener('click',()=>{
+
+faqItems.forEach(el=>{
+if(el !== item){
+el.classList.remove('active');
+}
+});
+
+item.classList.toggle('active');
+
+setTimeout(()=>{
+const contentHeight =
+document.querySelector('.ms-faq-content').offsetHeight;
+
+faqImageWrap.style.height = contentHeight + 'px';
+},400);
+
+});
+
+});
+
+/* initial sync */
+window.addEventListener('load',()=>{
+if(faqImageWrap){
+faqImageWrap.style.height =
+document.querySelector('.ms-faq-content').offsetHeight + 'px';
+}
+});
+
+window.addEventListener('resize',()=>{
+if(faqImageWrap){
+faqImageWrap.style.height =
+document.querySelector('.ms-faq-content').offsetHeight + 'px';
+}
 });

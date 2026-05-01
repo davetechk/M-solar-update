@@ -19,7 +19,7 @@
     <div class="hero__overlay" aria-hidden="true"></div>
 
     <nav class="nav container">
-      <a class="" href="#top" aria-label="MO Solar Energy home">
+      <a href="index.html" aria-label="MO Solar Energy home">
         <img class="brand__mark" src="IMG_S/logo/M_SOLAR_LOGO.png" alt="MO Solar Energy Logo" />
       </a>
 
@@ -28,23 +28,23 @@
       </button>
 
       <div class="nav__links" data-nav-links>
-        <a class="nav__link" href="#top">Home</a>
-        <a class="nav__link" href="#about">About Us</a>
+        <a class="nav__link" href="index.html">Home</a>
+        <a class="nav__link" href="about.html">About</a>
         <div class="nav__dropdown">
           <button class="nav__link nav__link--btn" type="button" aria-haspopup="true" aria-expanded="false">
-            Energy Solutions <span class="chev">▾</span>
+            Energy Solutions ▾
           </button>
           <div class="nav__menu" role="menu" aria-label="Energy Solutions menu">
-            <a href="#services" role="menuitem">Our Services</a>
-            <a href="#purpose" role="menuitem">Use Cases</a>
-            <a href="#faq" role="menuitem">FAQ</a>
+            <a href="product.html" role="menuitem">Products</a>
+            <a href="product.html" role="menuitem">Services</a>
+            <a href="contact us.html" role="menuitem">FAQ</a>
           </div>
         </div>
-        <a class="nav__link" href="#blog">Blog</a>
-
+        <a class="nav__link" href="portfolio.html">Portfolio</a>
+        <a class="nav__link active" href="blog.html">Blog</a>
       </div>
       
-        <a class="btn btn--pill btn--primary nav__cta" href="#contact">
+        <a class="btn btn--pill btn--primary nav__cta" href="contact us.html">
           Contact Us</a>
     </nav>
 
@@ -83,9 +83,19 @@
 
       <div class="ms-blog-head">
         <h2>Latest Articles</h2>
+        <div class="ms-blog-layout-icons">
+          <button class="active" id="viewGrid" title="Grid view" aria-label="Grid view">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+          <button id="viewList" title="List view" aria-label="List view">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+        </div>
       </div>
 
       <div class="ms-blog-grid" id="blogGrid"></div>
+
+      <div class="ms-blog-pagination" id="blogPagination"></div>
 
     </section>
 
@@ -108,10 +118,10 @@
       </div>
 
       <div class="footer__links">
-        <a href="#top">Home</a>
-        <a href="#about">About_us</a>
-        <a href="#services">Energy_Solutions</a>
-        <a href="#blog">Blog</a>
+        <a href="index.html">Home</a>
+        <a href="about.html">About_us</a>
+        <a href="product.html">Energy_Solutions</a>
+        <a href="blog.html">Blog</a>
       </div>
     </div>
 
@@ -142,124 +152,147 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+/* ── Supabase config (unchanged) ── */
 const SUPABASE_URL = "https://imdguhkjdfipugcbohwu.supabase.co";
-const SUPABASE_KEY = "YOUR_ANON_KEY_HERE";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImltZGd1aGtqZGZpcHVnY2JvaHd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNzc4NDMsImV4cCI6MjA5MTg1Mzg0M30.835mocSlkQC7VqQD9PXmwyGYIcI1MbNYbOoTHN8G6Rk";
 
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const featuredWrap = document.getElementById("featuredWrap");
-const blogGrid = document.getElementById("blogGrid");
+/* ── DOM refs ── */
+const featuredWrap   = document.getElementById("featuredWrap");
+const blogGrid       = document.getElementById("blogGrid");
+const blogPagination = document.getElementById("blogPagination");
 
+/* ── State ── */
+const POSTS_PER_PAGE = 6;
+let allBlogs    = [];
+let currentPage = 1;
+
+/* ── Helpers ── */
 function safeDate(date){
   return new Date(date).toLocaleDateString("en-US", {
-    year:"numeric",
-    month:"long",
-    day:"numeric"
+    year:"numeric", month:"long", day:"numeric"
   });
 }
 
-/* FEATURED POST */
+/* ── FEATURED POST (Supabase query unchanged) ── */
 async function loadFeatured(){
+  const { data, error } = await client
+    .from("blogs")
+    .select("*")
+    .eq("featured", true)
+    .eq("status", "published")
+    .order("created_at", { ascending:false })
+    .limit(1);
 
-const { data, error } = await client
-.from("blogs")
-.select("*")
-.eq("featured", true)
-.eq("status", "published")
-.order("created_at", { ascending:false })
-.limit(1);
+  if(error || !data.length){ featuredWrap.style.display = "none"; return; }
 
-if(error || !data.length){
-featuredWrap.style.display = "none";
-return;
+  const b = data[0];
+  featuredWrap.innerHTML = `
+    <a href="blogdetails.html?slug=${b.slug}" class="ms-blog-featured-image">
+      <img src="${b.cover_image}" alt="${b.title}">
+    </a>
+    <div class="ms-blog-featured-content">
+      <div class="ms-blog-featured-meta">
+        <span class="ms-blog-label">Featured</span>
+        <span class="ms-blog-date">${safeDate(b.created_at)}</span>
+      </div>
+      <h1 class="ms-blog-featured-title">${b.title}</h1>
+      <p class="ms-blog-featured-text">${b.excerpt || ""}</p>
+      <div class="ms-blog-author">
+        ${b.author_avatar ? `<img src="${b.author_avatar}" alt="${b.author}">` : ""}
+        <div>
+          <strong>${b.author}</strong>
+          <span>${b.author_role || b.read_time || ""}</span>
+        </div>
+      </div>
+      <a href="blogdetails.html?slug=${b.slug}" class="ms-blog-read-btn">Read Article →</a>
+    </div>
+  `;
 }
 
-const blog = data[0];
+/* ── Render one page of cards ── */
+function renderPage(page){
+  currentPage = page;
+  const start     = (page - 1) * POSTS_PER_PAGE;
+  const pagePosts = allBlogs.slice(start, start + POSTS_PER_PAGE);
 
-featuredWrap.innerHTML = `
-<a href="blogdetails.html?slug=${blog.slug}" class="ms-blog-featured-image">
-<img src="${blog.cover_image}" alt="${blog.title}">
-</a>
+  blogGrid.innerHTML = pagePosts.map(b => `
+    <article class="ms-blog-card">
+      <a href="blogdetails.html?slug=${b.slug}" class="ms-blog-card-img">
+        <img src="${b.cover_image}" alt="${b.title}">
+        ${b.category ? `<span class="ms-blog-mini-tag">${b.category}</span>` : ""}
+      </a>
+      <div class="ms-blog-card-body">
+        <small>${safeDate(b.created_at)} · ${b.read_time || ""}</small>
+        <h3>${b.title}</h3>
+        <p>${b.excerpt || ""}</p>
+        <div class="ms-blog-card-bottom">
+          <div class="ms-blog-mini-author">
+            ${b.author_avatar ? `<img src="${b.author_avatar}" alt="${b.author}">` : ""}
+            <span>${b.author}</span>
+          </div>
+          <a href="blogdetails.html?slug=${b.slug}">Read More ›</a>
+        </div>
+      </div>
+    </article>
+  `).join("");
 
-<div class="ms-blog-featured-content">
-
-<div class="ms-blog-featured-meta">
-<span class="ms-blog-label">Featured</span>
-<span class="ms-blog-date">${safeDate(blog.created_at)}</span>
-</div>
-
-<h1 class="ms-blog-featured-title">${blog.title}</h1>
-
-<p class="ms-blog-featured-text">
-${blog.excerpt || ""}
-</p>
-
-<div class="ms-blog-author">
-<div>
-<strong>${blog.author}</strong>
-<span>${blog.read_time}</span>
-</div>
-</div>
-
-<a href="blogdetails.html?slug=${blog.slug}" class="ms-blog-read-btn">
-Read Article →
-</a>
-
-</div>
-`;
+  renderPagination();
+  blogGrid.scrollIntoView({ behavior:"smooth", block:"start" });
 }
 
-/* BLOG POSTS */
+/* ── Render pagination ── */
+function renderPagination(){
+  const total = Math.ceil(allBlogs.length / POSTS_PER_PAGE);
+  if(total <= 1){ blogPagination.innerHTML = ""; return; }
+
+  const pages = [];
+  for(let i = 1; i <= total; i++){
+    if(i === 1 || i === total || Math.abs(i - currentPage) <= 1){
+      pages.push(`<button class="${i === currentPage ? "active" : ""}" data-p="${i}">${i}</button>`);
+    } else if(Math.abs(i - currentPage) === 2){
+      pages.push(`<span class="ms-blog-pg-ellipsis">…</span>`);
+    }
+  }
+
+  blogPagination.innerHTML =
+    `<button class="ms-blog-pg-arrow" data-p="${currentPage - 1}" ${currentPage===1?"disabled":""} aria-label="Previous">‹</button>` +
+    pages.join("") +
+    `<button class="ms-blog-pg-arrow" data-p="${currentPage + 1}" ${currentPage===total?"disabled":""} aria-label="Next">›</button>`;
+
+  blogPagination.querySelectorAll("button[data-p]").forEach(btn => {
+    btn.addEventListener("click", () => renderPage(+btn.dataset.p));
+  });
+}
+
+/* ── BLOG POSTS (Supabase query unchanged) ── */
 async function loadBlogs(){
+  const { data, error } = await client
+    .from("blogs")
+    .select("*")
+    .eq("status","published")
+    .order("created_at", { ascending:false });
 
-const { data, error } = await client
-.from("blogs")
-.select("*")
-.eq("status","published")
-.order("created_at", { ascending:false });
+  if(error){ blogGrid.innerHTML = "<p>Unable to load blogs.</p>"; return; }
 
-if(error){
-blogGrid.innerHTML = "<p>Unable to load blogs.</p>";
-return;
+  allBlogs = data;
+  renderPage(1);
 }
 
-blogGrid.innerHTML = "";
+/* ── Grid / list toggle ── */
+const btnGrid = document.getElementById("viewGrid");
+const btnList = document.getElementById("viewList");
 
-data.forEach(blog => {
-
-blogGrid.innerHTML += `
-<article class="ms-blog-card">
-
-<a href="blogdetails.html?slug=${blog.slug}" class="ms-blog-card-img">
-<img src="${blog.cover_image}" alt="${blog.title}">
-</a>
-
-<div class="ms-blog-card-body">
-
-<small>${safeDate(blog.created_at)} • ${blog.read_time}</small>
-
-<h3>${blog.title}</h3>
-
-<p>${blog.excerpt || ""}</p>
-
-<div class="ms-blog-card-bottom">
-
-<div class="ms-blog-mini-author">
-<span>${blog.author}</span>
-</div>
-
-<a href="blogdetails.html?slug=${blog.slug}">
-Read More ›
-</a>
-
-</div>
-
-</div>
-</article>
-`;
-
-});
-
+if(btnGrid && btnList){
+  btnGrid.addEventListener("click", () => {
+    blogGrid.classList.remove("ms-blog-grid--list");
+    btnGrid.classList.add("active"); btnList.classList.remove("active");
+  });
+  btnList.addEventListener("click", () => {
+    blogGrid.classList.add("ms-blog-grid--list");
+    btnList.classList.add("active"); btnGrid.classList.remove("active");
+  });
 }
 
 loadFeatured();

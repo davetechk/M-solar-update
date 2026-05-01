@@ -19,7 +19,7 @@
     <div class="hero__overlay" aria-hidden="true"></div>
 
     <nav class="nav container">
-      <a class="" href="#top" aria-label="MO Solar Energy home">
+      <a href="index.html" aria-label="MO Solar Energy home">
         <img class="brand__mark" src="IMG_S/logo/M_SOLAR_LOGO.png" alt="MO Solar Energy Logo" />
       </a>
 
@@ -28,23 +28,23 @@
       </button>
 
       <div class="nav__links" data-nav-links>
-        <a class="nav__link" href="#top">Home</a>
-        <a class="nav__link" href="#about">About Us</a>
+        <a class="nav__link" href="index.html">Home</a>
+        <a class="nav__link" href="about.html">About</a>
         <div class="nav__dropdown">
           <button class="nav__link nav__link--btn" type="button" aria-haspopup="true" aria-expanded="false">
-            Energy Solutions <span class="chev">▾</span>
+            Energy Solutions ▾
           </button>
           <div class="nav__menu" role="menu" aria-label="Energy Solutions menu">
-            <a href="#services" role="menuitem">Our Services</a>
-            <a href="#purpose" role="menuitem">Use Cases</a>
-            <a href="#faq" role="menuitem">FAQ</a>
+            <a href="product.html" role="menuitem">Products</a>
+            <a href="product.html" role="menuitem">Services</a>
+            <a href="contact us.html" role="menuitem">FAQ</a>
           </div>
         </div>
-        <a class="nav__link" href="#blog">Blog</a>
-
+        <a class="nav__link" href="portfolio.html">Portfolio</a>
+        <a class="nav__link active" href="blog.html">Blog</a>
       </div>
       
-        <a class="btn btn--pill btn--primary nav__cta" href="#contact">
+        <a class="btn btn--pill btn--primary nav__cta" href="contact us.html">
           Contact Us</a>
     </nav>
 
@@ -91,13 +91,12 @@ Loading...
 
 <!-- author -->
 <div class="ms-article-author">
-<div class="ms-article-author-circle">
-<span id="articleAuthorLetter">A</span>
+<div class="ms-article-author-avatar" id="articleAuthorAvatar">
+  <span id="articleAuthorLetter">A</span>
 </div>
-
 <div>
 <strong id="articleAuthor">Admin</strong>
-<small>Author</small>
+<small id="articleAuthorRole">Author</small>
 </div>
 </div>
 
@@ -110,7 +109,7 @@ Loading...
 <div class="ms-related-section">
 
 <div class="ms-related-head">
-<h2>Related Articles</h2>
+<h2>Related Blogs</h2>
 </div>
 
 <div class="ms-related-grid" id="relatedBlogs"></div>
@@ -134,10 +133,10 @@ Loading...
       </div>
 
       <div class="footer__links">
-        <a href="#top">Home</a>
-        <a href="#about">About_us</a>
-        <a href="#services">Energy_Solutions</a>
-        <a href="#blog">Blog</a>
+        <a href="index.html">Home</a>
+        <a href="about.html">About_us</a>
+        <a href="product.html">Energy_Solutions</a>
+        <a href="blog.html">Blog</a>
       </div>
     </div>
 
@@ -170,104 +169,102 @@ Loading...
 
 <script>
 const SUPABASE_URL = "https://imdguhkjdfipugcbohwu.supabase.co";
-const SUPABASE_KEY = "YOUR_ANON_KEY_HERE";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImltZGd1aGtqZGZpcHVnY2JvaHd1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNzc4NDMsImV4cCI6MjA5MTg1Mzg0M30.835mocSlkQC7VqQD9PXmwyGYIcI1MbNYbOoTHN8G6Rk";
 
 const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const params = new URLSearchParams(window.location.search);
 const slug = params.get("slug");
 
-const image = document.getElementById("articleImage");
-const title = document.getElementById("articleTitle");
-const date = document.getElementById("articleDate");
-const readTime = document.getElementById("articleReadTime");
-const content = document.getElementById("articleContent");
-const author = document.getElementById("articleAuthor");
+/* ── DOM refs ── */
+const image        = document.getElementById("articleImage");
+const title        = document.getElementById("articleTitle");
+const date         = document.getElementById("articleDate");
+const readTime     = document.getElementById("articleReadTime");
+const content      = document.getElementById("articleContent");
+const author       = document.getElementById("articleAuthor");
 const authorLetter = document.getElementById("articleAuthorLetter");
-const category = document.getElementById("articleCategory");
+const authorAvatar = document.getElementById("articleAuthorAvatar");
+const authorRole   = document.getElementById("articleAuthorRole");
+const category     = document.getElementById("articleCategory");
 const relatedBlogs = document.getElementById("relatedBlogs");
 
 function niceDate(d){
-return new Date(d).toLocaleDateString("en-US",{
-year:"numeric",
-month:"long",
-day:"numeric"
-});
+  return new Date(d).toLocaleDateString("en-US",{
+    year:"numeric", month:"long", day:"numeric"
+  });
 }
 
-/* load article */
+/* ── Load article (Supabase query unchanged) ── */
 async function loadArticle(){
+  const { data, error } = await client
+    .from("blogs")
+    .select("*")
+    .eq("slug", slug)
+    .single();
 
-const { data, error } = await client
-.from("blogs")
-.select("*")
-.eq("slug", slug)
-.single();
+  if(error || !data){
+    title.innerText = "Article Not Found";
+    content.innerHTML = "<p>This article does not exist.</p>";
+    return;
+  }
 
-if(error || !data){
-title.innerText = "Article Not Found";
-content.innerHTML = "<p>This article does not exist.</p>";
-return;
+  document.title = data.title + " | MO Solar";
+
+  image.src = data.cover_image;
+  image.alt = data.title;
+
+  title.innerText   = data.title;
+  date.innerText    = niceDate(data.created_at);
+  readTime.innerText = data.read_time || "5 min read";
+  category.innerText = data.category || "BLOG";
+
+  /* author — show avatar image if available, else amber letter circle */
+  author.innerText = data.author || "Admin";
+  authorRole.innerText = data.author_role || "Author";
+
+  if(data.author_avatar){
+    authorAvatar.innerHTML = `<img src="${data.author_avatar}" alt="${data.author || 'Author'}">`;
+    authorAvatar.classList.add("ms-article-author-avatar--img");
+  } else {
+    authorLetter.innerText = (data.author || "A").charAt(0).toUpperCase();
+  }
+
+  /* content supports HTML */
+  content.innerHTML = data.content;
+
+  loadRelated(data.id);
 }
 
-document.title = data.title + " | MO Solar";
-
-image.src = data.cover_image;
-image.alt = data.title;
-
-title.innerText = data.title;
-date.innerText = niceDate(data.created_at);
-readTime.innerText = data.read_time || "5 min read";
-
-author.innerText = data.author || "Admin";
-authorLetter.innerText = (data.author || "A").charAt(0).toUpperCase();
-
-category.innerText = data.category || "BLOG";
-
-/* content supports HTML */
-content.innerHTML = data.content;
-
-loadRelated(data.id);
-}
-
-/* related */
+/* ── Load related blogs (Supabase query unchanged) ── */
 async function loadRelated(currentId){
+  const { data, error } = await client
+    .from("blogs")
+    .select("*")
+    .neq("id", currentId)
+    .eq("status","published")
+    .order("created_at",{ascending:false})
+    .limit(3);
 
-const { data, error } = await client
-.from("blogs")
-.select("*")
-.neq("id", currentId)
-.eq("status","published")
-.order("created_at",{ascending:false})
-.limit(3);
+  if(error || !data.length){
+    relatedBlogs.closest(".ms-related-section").style.display = "none";
+    return;
+  }
 
-if(error || !data.length){
-relatedBlogs.style.display = "none";
-return;
-}
-
-relatedBlogs.innerHTML = "";
-
-data.forEach(post=>{
-
-relatedBlogs.innerHTML += `
-<a href="blogdetails.html?slug=${post.slug}" class="ms-related-card">
-
-<div class="ms-related-img">
-<img src="${post.cover_image}" alt="${post.title}">
-</div>
-
-<div class="ms-related-body">
-<small>${niceDate(post.created_at)}</small>
-<h3>${post.title}</h3>
-<span>Read Article →</span>
-</div>
-
-</a>
-`;
-
-});
-
+  relatedBlogs.innerHTML = data.map(post => `
+    <article class="ms-related-card">
+      <a href="blogdetails.html?slug=${post.slug}" class="ms-related-img">
+        <img src="${post.cover_image}" alt="${post.title}">
+        ${post.category ? `<span class="ms-blog-mini-tag">${post.category}</span>` : ""}
+      </a>
+      <div class="ms-related-body">
+        <small>${niceDate(post.created_at)} · ${post.read_time || ""}</small>
+        <h3>${post.title}</h3>
+        <p>${post.excerpt ? post.excerpt.substring(0,90) + "…" : ""}</p>
+        <a href="blogdetails.html?slug=${post.slug}" class="ms-related-read">Read Article →</a>
+      </div>
+    </article>
+  `).join("");
 }
 
 loadArticle();
