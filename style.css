@@ -7,7 +7,7 @@
   --card: #ffffff;
   --stroke: rgba(14,27,42,.10);
 
-  --accent: #F2D079;          /* gold button */
+  --accent: #FBB43C;          /* gold button */
   --accent-ink: #2a1b00;
 
   --navGlass: rgba(255,255,255,.10);
@@ -27,7 +27,7 @@
   --cta-bg: #eaf2ff;        /* light blue background */
   --cta-ink: #1a1f2a;       /* headline text */
   --cta-muted: rgba(26,31,42,.70);
-  --cta-accent: #F2D079;    /* gold */
+  --cta-accent: #FBB43C;    /* gold */
   --cta-accent-ink: #2a1b00;
   --ease-smooth: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
