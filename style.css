@@ -135,8 +135,8 @@ button{font:inherit}
 }
 .btn--ghost{
   background: transparent;
-  border: 1.5px solid #F2D079;
-  color: #F2D079;
+  border: 1.5px solid #FBB43C;
+  color: #FBB43C;
   backdrop-filter: blur(10px);
 }
 .btn--pill{ border-radius: 999px; }
@@ -256,7 +256,7 @@ transform:translateY(-1px);
 }
 
 .nav__cta{
-margin-left:8px;
+margin-right: -20px;
 }
 
 /* dropdown */
