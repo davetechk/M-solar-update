@@ -3202,8 +3202,8 @@ transform:translateY(0);
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  border: 2px solid #F2D079;
-  color: #F2D079;
+  border: 2px solid #FBB43C;
+  color: #FBB43C;
   font-size: 15px;
   font-weight: 700;
   display: flex;
@@ -3216,8 +3216,8 @@ transform:translateY(0);
 
 /* active step — filled amber with shadow */
 .hiw__num--active {
-  background: #F2D079;
-  border-color: #f4b54b;
+  background: #FBB43C;
+  border-color: #FBB43C;
   color: #ffffff;
   box-shadow: 0 8px 24px rgba(244,181,75,.40);
 }
